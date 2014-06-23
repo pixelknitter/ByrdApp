@@ -14,6 +14,7 @@
 		2C1CA86C1957F5AD00E9417E /* TweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1CA86A1957F5AD00E9417E /* TweetViewController.m */; };
 		2C1CA86D1957F5AD00E9417E /* TweetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA86B1957F5AD00E9417E /* TweetViewController.xib */; };
 		2C1CA87019580BF900E9417E /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1CA86F19580BF900E9417E /* Utils.m */; };
+		2C1CA8751958CC3C00E9417E /* TwitterAPI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA8741958CC3C00E9417E /* TwitterAPI.plist */; };
 		2CC8FC2919520BFA00014013 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC8FC2819520BFA00014013 /* Foundation.framework */; };
 		2CC8FC2B19520BFA00014013 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC8FC2A19520BFA00014013 /* CoreGraphics.framework */; };
 		2CC8FC2D19520BFA00014013 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC8FC2C19520BFA00014013 /* UIKit.framework */; };
@@ -59,6 +60,7 @@
 		2C1CA86B1957F5AD00E9417E /* TweetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetViewController.xib; sourceTree = "<group>"; };
 		2C1CA86E19580BF900E9417E /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		2C1CA86F19580BF900E9417E /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		2C1CA8741958CC3C00E9417E /* TwitterAPI.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TwitterAPI.plist; sourceTree = "<group>"; };
 		2CC8FC2519520BFA00014013 /* ByrdFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ByrdFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC8FC2819520BFA00014013 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2CC8FC2A19520BFA00014013 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -221,6 +223,7 @@
 				2CC8FC5C1957526500014013 /* TwitterClient.m */,
 				2CC8FC7C195756A600014013 /* PersistencyManager.h */,
 				2CC8FC7D195756A600014013 /* PersistencyManager.m */,
+				2C1CA8741958CC3C00E9417E /* TwitterAPI.plist */,
 			);
 			name = TwitterAPI;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				2C1CA8681957F58C00E9417E /* ComposeTweetViewController.xib in Resources */,
 				2CC8FC68195752FE00014013 /* LoginViewController.xib in Resources */,
 				2CC8FC7B195754AF00014013 /* TweetCell.xib in Resources */,
+				2C1CA8751958CC3C00E9417E /* TwitterAPI.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,9 +9,8 @@
 #import "TwitterClient.h"
 #import "PersistencyManager.h"
 
+// OAUTH SETUP
 #define TWITTER_BASE_URL @"https://api.twitter.com/"
-#define TWITTER_CONSUMER_KEY @"6lZcSvOp60e0OX4an76Af3QpG"
-#define TWITTER_CONSUMER_SECRET @"4zT4Wb6JkhXnoi4zJu9CBu7iaFuyssb4kJhMuKYBaphmGVRsM5"
 
 #define TOKEN_REQUEST_PATH @"oauth/request_token"
 #define TOKEN_ACCESS_PATH @"oauth/access_token"
@@ -19,6 +18,7 @@
 #define TOKEN_CALLBACK_PATH @"oauth"
 #define TOKEN_AUTH_URL @"oauth/authorize?oauth_token=%@"
 
+// Endpoints
 #define GET_USER_URL @"1.1/account/verify_credentials.json"
 #define GET_TIMELINE_URL @"1.1/statuses/home_timeline.json"
 #define POST_STATUS_UPDATE_URL @"1.1/statuses/update.json"
@@ -28,10 +28,8 @@
 #define GET_MENTIONS_URL @"1.1/statuses/mentions_timeline.json"
 #define GET_MY_TWEETS_URL @"1.1/statuses/user_timeline.json"
 
-static NSString *TWITTER_API_KEY;
-static NSString *TWITTER_API_SECRET;
-static NSString *TWITTER_ACCESS_TOKEN;
-static NSString *TWITTER_ACCESS_TOKEN_SECRET;
+static NSString *TWITTER_CONSUMER_KEY;
+static NSString *TWITTER_CONSUMER_SECRET;
 
 @implementation NSURL (dictionaryFromQueryString)
 -(NSDictionary *) dictionaryFromQueryString{
@@ -55,13 +53,6 @@ static NSString *TWITTER_ACCESS_TOKEN_SECRET;
 
 @property (nonatomic, strong) PersistencyManager *persistencyManager;
 @property (nonatomic, strong) TwitterClient *client;
-//@property (nonatomic) BOOL isOnline;
-
-@property (nonatomic, copy, readonly) BDBOAuthToken *accessToken;
-
-//#pragma mark AccessToken
-//- (BOOL)saveAccessToken:(BDBOAuthToken *)accessToken;
-//- (BOOL)removeAccessToken;
 
 @end
 
@@ -72,7 +63,6 @@ static NSString *TWITTER_ACCESS_TOKEN_SECRET;
   self = [super init];
   if (self) {
     _persistencyManager = [[PersistencyManager alloc] init];
-//    _isOnline = NO;
   }
   return self;
 }
@@ -85,30 +75,29 @@ static NSString *TWITTER_ACCESS_TOKEN_SECRET;
   dispatch_once(&oncePredicate, ^{
     
     /* read in api config from plist */
-//    NSString *errorDesc = nil;
-//    NSPropertyListFormat format;
-//    NSString *plistPath;
-//    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-//                                                              NSUserDomainMask, YES) objectAtIndex:0];
-//    plistPath = [rootPath stringByAppendingPathComponent:@"TwitterAPI.plist"];
-//    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
-//      plistPath = [[NSBundle mainBundle] pathForResource:@"TwitterAPI" ofType:@"plist"];
-//    }
-//    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
-//    NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization
-//                                          propertyListFromData:plistXML
-//                                          mutabilityOption:NSPropertyListMutableContainersAndLeaves
-//                                          format:&format
-//                                          errorDescription:&errorDesc];
-//    if (!temp) {
-//      NSLog(@"Error reading plist: %@, format: %d", errorDesc, format);
-//    }
-//    
-//    
-//    TWITTER_API_KEY = [temp objectForKey:@"TWITTER_API_KEY"];
-//    TWITTER_API_SECRET = [temp objectForKey:@"TWITTER_API_SECRET"];
-//    TWITTER_ACCESS_TOKEN = [temp objectForKey:@"TWITTER_ACCESS_TOKEN"];
-//    TWITTER_ACCESS_TOKEN_SECRET = [temp objectForKey:@"TWITTER_ACCESS_TOKEN_SECRET"];
+    NSString *errorDesc = nil;
+    NSPropertyListFormat format;
+    NSString *plistPath;
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    plistPath = [rootPath stringByAppendingPathComponent:@"TwitterAPI.plist"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+      plistPath = [[NSBundle mainBundle] pathForResource:@"TwitterAPI" ofType:@"plist"];
+    }
+    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
+    NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization
+                                          propertyListFromData:plistXML
+                                          mutabilityOption:NSPropertyListMutableContainersAndLeaves
+                                          format:&format
+                                          errorDescription:&errorDesc];
+    if (!temp) {
+      NSLog(@"Error reading plist: %@, format: %d", errorDesc, format);
+    }
+    
+    TWITTER_CONSUMER_KEY = [temp objectForKey:@"TWITTER_CONSUMER_KEY"];
+    TWITTER_CONSUMER_SECRET = [temp objectForKey:@"TWITTER_CONSUMER_SECRET"];
+    
+    
     
     /* now create the instance */
     _sharedInstance = [[TwitterClient alloc] initWithBaseURL:[NSURL URLWithString:TWITTER_BASE_URL] consumerKey:TWITTER_CONSUMER_KEY consumerSecret:TWITTER_CONSUMER_SECRET];
