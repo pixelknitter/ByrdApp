@@ -3,14 +3,14 @@
 
 target "ByrdFeed" do
 
+pod 'Mantle'
 pod 'ReactiveCocoa'
 pod 'AFNetworking'
 pod 'BDBOAuth1Manager'
 pod 'MBProgressHUD'
-pod 'pop'
-pod 'LBBlurredImage'
 pod 'TSMessages'
 pod 'CrittercismSDK'
+pod 'MHPrettyDate'
 
 end
 
