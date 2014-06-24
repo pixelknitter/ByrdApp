@@ -51,13 +51,23 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="twitter" returnKeyType="next"/>
                 </textField>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bird_gray_48.png" translatesAutoresizingMaskIntoConstraints="NO" id="Eda-MD-5Ht">
+                    <rect key="frame" x="136" y="231" width="48" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="4B6-6V-0l7"/>
+                        <constraint firstAttribute="width" constant="48" id="I6Z-PN-Iye"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.26206301482018823" green="0.67303063061024115" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="Eda-MD-5Ht" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="136" id="IG5-To-4t4"/>
                 <constraint firstItem="cf6-WI-SIJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="115" id="RbG-7W-AG2"/>
                 <constraint firstItem="V1S-BU-XpB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="100" id="RnK-EO-n4J"/>
                 <constraint firstItem="cf6-WI-SIJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="100" id="SJy-Ra-NWh"/>
                 <constraint firstItem="7Rz-5h-ohy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="130" id="TtA-Np-ERu"/>
+                <constraint firstItem="Eda-MD-5Ht" firstAttribute="top" secondItem="7Rz-5h-ohy" secondAttribute="bottom" constant="10" id="r9n-or-UEq"/>
                 <constraint firstItem="7Rz-5h-ohy" firstAttribute="top" secondItem="V1S-BU-XpB" secondAttribute="bottom" constant="8" id="xd8-Rb-VWT"/>
                 <constraint firstItem="V1S-BU-XpB" firstAttribute="top" secondItem="cf6-WI-SIJ" secondAttribute="bottom" constant="8" id="xmh-jw-Vqc"/>
             </constraints>
@@ -65,4 +75,7 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <resources>
+        <image name="bird_gray_48.png" width="44" height="35"/>
+    </resources>
 </document>

@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "Constants.h"
 
 
 @interface LoginViewController ()
@@ -15,7 +16,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (strong, nonatomic) TwitterClient *twitterClient;
 
 @end
 
@@ -26,7 +26,6 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     // Custom initialization
-    _twitterClient = [TwitterClient sharedInstance];
   }
   return self;
 }

@@ -15,6 +15,18 @@
 		2C1CA86D1957F5AD00E9417E /* TweetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA86B1957F5AD00E9417E /* TweetViewController.xib */; };
 		2C1CA87019580BF900E9417E /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1CA86F19580BF900E9417E /* Utils.m */; };
 		2C1CA8751958CC3C00E9417E /* TwitterAPI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA8741958CC3C00E9417E /* TwitterAPI.plist */; };
+		2C1CA886195A19D200E9417E /* bird_black_16_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA87A195A19D200E9417E /* bird_black_16_0.png */; };
+		2C1CA887195A19D200E9417E /* bird_blue_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA87B195A19D200E9417E /* bird_blue_16.png */; };
+		2C1CA888195A19D200E9417E /* bird_blue_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA87C195A19D200E9417E /* bird_blue_32.png */; };
+		2C1CA889195A19D200E9417E /* bird_blue_48.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA87D195A19D200E9417E /* bird_blue_48.png */; };
+		2C1CA88A195A19D200E9417E /* bird_gray_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA87E195A19D200E9417E /* bird_gray_16.png */; };
+		2C1CA88B195A19D200E9417E /* bird_gray_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA87F195A19D200E9417E /* bird_gray_32.png */; };
+		2C1CA88C195A19D200E9417E /* bird_gray_48.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA880195A19D200E9417E /* bird_gray_48.png */; };
+		2C1CA88D195A19D200E9417E /* everything-spritev2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA881195A19D200E9417E /* everything-spritev2.png */; };
+		2C1CA88E195A19D200E9417E /* favorite_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA882195A19D200E9417E /* favorite_on.png */; };
+		2C1CA88F195A19D200E9417E /* reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA883195A19D200E9417E /* reply.png */; };
+		2C1CA890195A19D200E9417E /* retweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA884195A19D200E9417E /* retweet.png */; };
+		2C1CA891195A19D200E9417E /* retweet_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CA885195A19D200E9417E /* retweet_on.png */; };
 		2CC8FC2919520BFA00014013 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC8FC2819520BFA00014013 /* Foundation.framework */; };
 		2CC8FC2B19520BFA00014013 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC8FC2A19520BFA00014013 /* CoreGraphics.framework */; };
 		2CC8FC2D19520BFA00014013 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC8FC2C19520BFA00014013 /* UIKit.framework */; };
@@ -61,6 +73,19 @@
 		2C1CA86E19580BF900E9417E /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		2C1CA86F19580BF900E9417E /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		2C1CA8741958CC3C00E9417E /* TwitterAPI.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TwitterAPI.plist; sourceTree = "<group>"; };
+		2C1CA876195A153D00E9417E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		2C1CA87A195A19D200E9417E /* bird_black_16_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird_black_16_0.png; sourceTree = "<group>"; };
+		2C1CA87B195A19D200E9417E /* bird_blue_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird_blue_16.png; sourceTree = "<group>"; };
+		2C1CA87C195A19D200E9417E /* bird_blue_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird_blue_32.png; sourceTree = "<group>"; };
+		2C1CA87D195A19D200E9417E /* bird_blue_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird_blue_48.png; sourceTree = "<group>"; };
+		2C1CA87E195A19D200E9417E /* bird_gray_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird_gray_16.png; sourceTree = "<group>"; };
+		2C1CA87F195A19D200E9417E /* bird_gray_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird_gray_32.png; sourceTree = "<group>"; };
+		2C1CA880195A19D200E9417E /* bird_gray_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird_gray_48.png; sourceTree = "<group>"; };
+		2C1CA881195A19D200E9417E /* everything-spritev2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "everything-spritev2.png"; sourceTree = "<group>"; };
+		2C1CA882195A19D200E9417E /* favorite_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_on.png; sourceTree = "<group>"; };
+		2C1CA883195A19D200E9417E /* reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reply.png; sourceTree = "<group>"; };
+		2C1CA884195A19D200E9417E /* retweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet.png; sourceTree = "<group>"; };
+		2C1CA885195A19D200E9417E /* retweet_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet_on.png; sourceTree = "<group>"; };
 		2CC8FC2519520BFA00014013 /* ByrdFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ByrdFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC8FC2819520BFA00014013 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2CC8FC2A19520BFA00014013 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -123,10 +148,30 @@
 		2C1CA87119580C0100E9417E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2C1CA876195A153D00E9417E /* Constants.h */,
 				2C1CA86E19580BF900E9417E /* Utils.h */,
 				2C1CA86F19580BF900E9417E /* Utils.m */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		2C1CA879195A19D200E9417E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				2C1CA87A195A19D200E9417E /* bird_black_16_0.png */,
+				2C1CA87B195A19D200E9417E /* bird_blue_16.png */,
+				2C1CA87C195A19D200E9417E /* bird_blue_32.png */,
+				2C1CA87D195A19D200E9417E /* bird_blue_48.png */,
+				2C1CA87E195A19D200E9417E /* bird_gray_16.png */,
+				2C1CA87F195A19D200E9417E /* bird_gray_32.png */,
+				2C1CA880195A19D200E9417E /* bird_gray_48.png */,
+				2C1CA881195A19D200E9417E /* everything-spritev2.png */,
+				2C1CA882195A19D200E9417E /* favorite_on.png */,
+				2C1CA883195A19D200E9417E /* reply.png */,
+				2C1CA884195A19D200E9417E /* retweet.png */,
+				2C1CA885195A19D200E9417E /* retweet_on.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		2CC8FC1C19520BFA00014013 = {
@@ -164,6 +209,7 @@
 		2CC8FC2E19520BFA00014013 /* ByrdFeed */ = {
 			isa = PBXGroup;
 			children = (
+				2C1CA879195A19D200E9417E /* Images */,
 				2C1CA87119580C0100E9417E /* Utilities */,
 				2CC8FC5A1957523900014013 /* Models */,
 				2CC8FC571957521800014013 /* Views */,
@@ -338,7 +384,19 @@
 				2CC8FC3319520BFA00014013 /* InfoPlist.strings in Resources */,
 				2C1CA86D1957F5AD00E9417E /* TweetViewController.xib in Resources */,
 				2CC8FC3B19520BFA00014013 /* Images.xcassets in Resources */,
+				2C1CA88A195A19D200E9417E /* bird_gray_16.png in Resources */,
+				2C1CA887195A19D200E9417E /* bird_blue_16.png in Resources */,
 				2C1CA85E1957A93100E9417E /* TimelineTableViewController.xib in Resources */,
+				2C1CA88C195A19D200E9417E /* bird_gray_48.png in Resources */,
+				2C1CA886195A19D200E9417E /* bird_black_16_0.png in Resources */,
+				2C1CA889195A19D200E9417E /* bird_blue_48.png in Resources */,
+				2C1CA891195A19D200E9417E /* retweet_on.png in Resources */,
+				2C1CA88E195A19D200E9417E /* favorite_on.png in Resources */,
+				2C1CA88F195A19D200E9417E /* reply.png in Resources */,
+				2C1CA88B195A19D200E9417E /* bird_gray_32.png in Resources */,
+				2C1CA890195A19D200E9417E /* retweet.png in Resources */,
+				2C1CA888195A19D200E9417E /* bird_blue_32.png in Resources */,
+				2C1CA88D195A19D200E9417E /* everything-spritev2.png in Resources */,
 				2C1CA8681957F58C00E9417E /* ComposeTweetViewController.xib in Resources */,
 				2CC8FC68195752FE00014013 /* LoginViewController.xib in Resources */,
 				2CC8FC7B195754AF00014013 /* TweetCell.xib in Resources */,

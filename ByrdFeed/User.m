@@ -7,6 +7,7 @@
 //
 
 #import "User.h"
+#import "Constants.h"
 
 @implementation User
 
@@ -14,13 +15,43 @@ static User *currentUser = nil;
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
   return @{
-           @"identifier"      : @"id",
+           @"userID"          : @"id",
            @"realName"        : @"name",
            @"userName"        : @"screen_name",
-           @"tweetCount"      : @"tweet_count",
-           @"imageURL"        : @"image_url",
-           @"location"        : @"location"
+           @"tweetCount"      : @"statuses_count",
+           @"followerCount"   : @"followers_count",
+           @"profileImageURL" : @"profile_image_url",
+           @"location"        : @"location",
+           @"description"     : @"description"
            };
+}
+
+//@property (nonatomic, strong) NSString *userName;
+//@property (nonatomic, strong) NSString *description;
+//@property (nonatomic, assign) NSInteger followersCount;
+//@property (nonatomic, strong) NSString *realName;
+//@property (nonatomic, strong) NSString *location;
+//@property (nonatomic, strong) NSString *profileBackgroundColor;
+//@property (nonatomic, strong) NSString *profileBackgroundImageURL;
+//@property (nonatomic, strong) NSString *profileImageURL;
+//@property (nonatomic, assign) NSInteger followingCount;
+//@property (nonatomic, assign) NSInteger tweetCount;
+
++ (NSValueTransformer *)profileImageURLJSONTransformer {
+  return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+}
+
++ (User*)initWithDictionary:(NSDictionary *)userDictionary {
+  NSError *error = nil;
+  
+  User *user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:userDictionary error:&error];
+  if(!error) {
+    return user;
+  } else {
+    NSLog(@"%@", error);
+  }
+  
+  return nil;
 }
 
 + (NSArray *)usersWithArray:(NSArray *)array {
@@ -35,6 +66,7 @@ static User *currentUser = nil;
       NSLog(@"%@", error);
     }
   }
+  
   return users;
 }
 
@@ -57,7 +89,7 @@ static User *currentUser = nil;
   NSData *archivedObject = [NSKeyedArchiver archivedDataWithRootObject:currentUser];
   [[NSUserDefaults standardUserDefaults] setObject:archivedObject forKey:@"current_user"];
   /* notify others */
-//  [[NSNotificationCenter defaultCenter] postNotificationName:UserLoggedInNotification object:nil];
+  [[NSNotificationCenter defaultCenter] postNotificationName:UserLoggedInNotification object:nil];
 }
 
 #pragma mark - Encoding/Decoding methods

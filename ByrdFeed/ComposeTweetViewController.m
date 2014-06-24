@@ -7,6 +7,9 @@
 //
 
 #import "ComposeTweetViewController.h"
+#import "Constants.h"
+#import "Tweet.h"
+#import "User.h"
 
 @interface ComposeTweetViewController ()
 

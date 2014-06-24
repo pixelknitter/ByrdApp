@@ -22,4 +22,15 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)retweetButton:(id)sender {
+  
+}
+
+- (IBAction)favoriteButton:(id)sender {
+  
+}
+
+- (IBAction)replyButton:(id)sender {
+  
+}
 @end

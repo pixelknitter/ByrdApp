@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "TimelineTableViewController.h"
+#import "Constants.h"
 
 @implementation AppDelegate
 
@@ -23,6 +24,8 @@
   else {
     [self showTimeline];
   }
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline) name:UserLoggedInNotification object:nil];
   
   self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
@@ -58,41 +61,36 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   return [[TwitterClient sharedInstance] processAuthResponseURL:url onSuccess:^{
-    NSLog(@"Access Token received, lets save it.");
-//    TwitterClient *client = [TwitterClient sharedInstance];
-//    
-//    /* get user */
-//    [client getWithEndpointType:TwitterClientEndpointUser success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//      
-////      [[NSNotificationCenter defaultCenter] addObserver:self
-////                                               selector:@selector(showTimelineTable)
-////                                                   name:UserLoggedInNotification object:nil];
-//      NSLog(@"Response: %@", responseObject);
-////      [[[ASUser alloc] initWithDictionary:responseObject] setAsCurrentUser];
-//      
-//      
-//      
-//    } failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-//      NSLog(@"Failure: %@", error);
-//    }];
+    /* get user */
+    [[TwitterClient sharedInstance] getWithEndpointType:TwitterClientEndpointUser success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      [[NSNotificationCenter defaultCenter] addObserver:self
+                                               selector:@selector(showTimeline)
+                                                   name:UserLoggedInNotification object:nil];
+      NSLog(@"Response: %@", responseObject);
+      [[User initWithDictionary:responseObject] setAsCurrentUser];
+      
+      
+      
+    } failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
+      NSLog(@"Failure: %@", error);
+    }];
   }];
 }
 
 - (void) showTimeline {
   TimelineTableViewController *tvc = [[TimelineTableViewController alloc] init];
-//  tvc.timelineType = TwitterClientAPIEndpointTimeline;
-  
+
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tvc];
   
   self.window.backgroundColor = tvc.view.backgroundColor;
 
   /* add the tweet colors to things */
   [nav.navigationBar setBarTintColor:tvc.view.backgroundColor];
-  [nav.navigationBar setTranslucent:NO];
+  [nav.navigationBar setTranslucent:YES];
   [nav.navigationBar setBarStyle:UIBarStyleBlack];
-  tvc.title = @"Tweet!";
   
-  
+  NSLog(@"Add TimeLine to View");
   self.window.rootViewController = nav;
 }
 

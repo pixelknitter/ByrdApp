@@ -50,34 +50,50 @@
                             <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHm-4y-zy8">
                                 <rect key="frame" x="115" y="8" width="17" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="NotificationBackgroundSuccessIcon.png">
+                                <state key="normal" image="retweet.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="retweetButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2Td-yH-UhH"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abb-L2-Oax">
                                 <rect key="frame" x="200" y="8" width="8" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="NotificationBackgroundWarningIcon.png">
+                                <state key="normal" image="favorite.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="favoriteButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yTO-Gr-0hy"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9B-ve-Zhd">
                                 <rect key="frame" x="20" y="8" width="17" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="NotificationBackgroundErrorIcon.png">
+                                <state key="normal" image="reply.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="replyButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="mrN-Zc-2yf"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </subviews>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="nameLabel" destination="0cg-wd-brI" id="dZ6-6B-kqz"/>
+                <outlet property="profileImage" destination="sRm-3G-vmd" id="pWK-er-0O8"/>
+                <outlet property="sinceLabel" destination="ypJ-Ng-F5E" id="9gs-8C-g9w"/>
+                <outlet property="tweetLabel" destination="1Sb-5X-i2D" id="ELv-rx-yG2"/>
+                <outlet property="userLabel" destination="PjB-U4-yUK" id="cJA-5c-2r1"/>
+            </connections>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="NotificationBackgroundErrorIcon.png" width="17" height="18"/>
-        <image name="NotificationBackgroundSuccessIcon.png" width="21" height="17"/>
-        <image name="NotificationBackgroundWarningIcon.png" width="4" height="17"/>
+        <image name="favorite.png" width="21" height="17"/>
+        <image name="reply.png" width="16" height="16"/>
+        <image name="retweet.png" width="16" height="16"/>
     </resources>
 </document>

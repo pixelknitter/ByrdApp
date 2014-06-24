@@ -158,52 +158,52 @@ static NSString *TWITTER_CONSUMER_SECRET;
 }
 
 - (AFHTTPRequestOperation *)getWithEndpointType:(TwitterClientEndpointType)endpointType success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-  // TODO
 
-//  NSString *endpointTypeStr = [[NSString alloc] init];
-//  NSDictionary *parameters = nil;
-//  
-//  if (endpointType == ASTwitterAPIEndpointUser){
-//    endpointTypeStr = GET_USER_URL;
-//  } else if (endpointType == ASTwitterAPIEndpointTimeline){
-//    endpointTypeStr = GET_TIMELINE_URL;
-//    
-//    parameters = @{
-//                   @"count": @(20)
-//                   };
-//  } else if (endpointType == ASTwitterAPIEndpointMentions){
-//    endpointTypeStr = GET_MENTIONS_URL;
-//  } else if (endpointType == ASTwitterAPIEndpointMyTweets){
-//    endpointTypeStr = GET_MY_TWEETS_URL;
-//    parameters = @{ @"screen_name": [ASUser currentUser].screenName };
-//  }
-//  
-//  return [self GET:endpointTypeStr parameters:parameters success:success failure:failure];
-
-  return nil;
+  NSString *endpointTypeString = [[NSString alloc] init];
+  NSDictionary *parameters = nil;
+  
+  if (endpointType == TwitterClientEndpointUser){
+    endpointTypeString = GET_USER_URL;
+  }
+  else if (endpointType == TwitterClientEndpointTimeline){
+    endpointTypeString = GET_TIMELINE_URL;
+    
+    // Grab default number of tweets for timeline
+    parameters = @{@"count": @(20)};
+  }
+  else if (endpointType == TwitterClientEndpointMentions){
+    endpointTypeString = GET_MENTIONS_URL;
+  }
+  else if (endpointType == TwitterClientEndpointMyTweets){
+    endpointTypeString = GET_MY_TWEETS_URL;
+    parameters = @{ @"screen_name": [User currentUser].userName };
+  }
+  
+  return [self GET:endpointTypeString parameters:parameters success:success failure:failure];
 }
 - (AFHTTPRequestOperation *)postWithEndpointType:(TwitterClientEndpointType)endpointType parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-  // TODO
   
-//  NSString *endpointTypeStr = [[NSString alloc] init];
-//  
-//  if (endpointType == ASTwitterAPIEndpointAddTweet){
-//    endpointTypeStr = POST_STATUS_UPDATE_URL;
-//  } else if (endpointType == ASTwitterAPIEndpointReply){
-//    endpointTypeStr = POST_STATUS_UPDATE_URL;
-//  } else if (endpointType == ASTwitterAPIEndpointRetweet){
-//    NSString *tweetId = parameters[@"id"];
-//    
-//    endpointTypeStr = [NSString stringWithFormat:POST_STATUS_RETWEET_URL, tweetId ];
-//  } else if (endpointType == ASTwitterAPIEndpointFavorite) {
-//    endpointTypeStr = POST_STATUS_FAVORITE_URL;
-//  } else if (endpointType == ASTwitterAPIEndpointUnfavorite) {
-//    endpointTypeStr = POST_STATUS_UNFAVORITE_URL;
-//  }
-//  
-//  return [self POST:endpointTypeStr parameters:parameters success:success failure:failure];
+  NSString *endpointTypeString = [[NSString alloc] init];
   
-  return nil;
+  if (endpointType == TwitterClientEndpointAddTweet){
+    endpointTypeString = POST_STATUS_UPDATE_URL;
+  }
+  else if (endpointType == TwitterClientEndpointReply){
+    endpointTypeString = POST_STATUS_UPDATE_URL;
+  }
+  else if (endpointType == TwitterClientEndpointRetweet){
+    NSString *tweetId = parameters[@"id"];
+    
+    endpointTypeString = [NSString stringWithFormat:POST_STATUS_RETWEET_URL, tweetId ];
+  }
+  else if (endpointType == TwitterClientEndpointFavorite) {
+    endpointTypeString = POST_STATUS_FAVORITE_URL;
+  }
+  else if (endpointType == TwitterClientEndpointUnfavorite) {
+    endpointTypeString = POST_STATUS_UNFAVORITE_URL;
+  }
+  
+  return [self POST:endpointTypeString parameters:parameters success:success failure:failure];
 }
 
 - (User *)getCurrentUser {
