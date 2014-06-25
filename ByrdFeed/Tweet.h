@@ -21,7 +21,10 @@
 @property (nonatomic, assign) NSInteger followerCount;
 @property (nonatomic, assign) NSInteger favoritesCount;
 @property (nonatomic, assign) NSInteger retweetCount;
+@property (nonatomic, assign) NSInteger isRetweeted;
+@property (nonatomic, assign) NSInteger isFavorited;
 
 + (NSArray *)tweetsWithArray:(NSArray *)array;
+- (Tweet *)initWithDictionary:(NSDictionary *)tweetDictionary;
 
 @end

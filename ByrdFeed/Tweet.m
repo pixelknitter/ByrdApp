@@ -18,10 +18,10 @@
            @"userName"          : @"user.name",
            @"screenName"        : @"user.screen_name",
            @"createdAt"         : @"created_at",
-//           @"retweeted"         : @"retweeted",
-//           @"favorited"         : @"favorited",
-//           @"retweetCount"      : @"retweet_count",
-//           @"favoritesCount"    : @"favourites_count",
+           @"isRetweeted"       : @"retweeted",
+           @"isFavorited"       : @"favorited",
+           @"retweetCount"      : @"retweet_count",
+           @"favoritesCount"    : @"favourites_count",
            @"profileImageURL"   : @"user.profile_image_url"
            };
 }
@@ -62,6 +62,19 @@
   }
   
   return tweets;
+}
+
+- (Tweet *)initWithDictionary:(NSDictionary *)tweetDictionary {
+  NSError *error = nil;
+  
+  Tweet *tweet = [MTLJSONAdapter modelOfClass:[Tweet class] fromJSONDictionary:tweetDictionary error:&error];
+  if(!error) {
+    return tweet;
+  } else {
+    NSLog(@"%@", error);
+  }
+  
+  return nil;
 }
 
 @end

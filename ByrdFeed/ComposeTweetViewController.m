@@ -95,9 +95,9 @@
                                                          //@"in_reply_to_status_id": _replyIdStr ? _replyIdStr : @""
                                                          }
                                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                                                 Tweet *newTweet = [[Tweet alloc] initWithDictionary:responseObject];
-//                                                 /* notify observers */
-//                                                 [[NSNotificationCenter defaultCenter] postNotificationName:NewTweetCreatedNotification object:self userInfo:[NSDictionary dictionaryWithObject:newTweet forKey:@"tweet"]];
+                                                 Tweet *newTweet = [[Tweet alloc] initWithDictionary:responseObject];
+                                                 /* notify observers */
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:NewTweetCreatedNotification object:self userInfo:[NSDictionary dictionaryWithObject:newTweet forKey:@"tweet"]];
                                                  [UIView animateWithDuration:0.75 animations:^{
                                                    [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
                                                    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:NO];

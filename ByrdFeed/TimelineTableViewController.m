@@ -168,9 +168,9 @@
 {
   // Create the next view controller.
   TweetViewController *tweetViewController = [[TweetViewController alloc] initWithNibName:nil bundle:nil];
-  
+  tweetViewController.tweet = self.tweets[indexPath.row];
   // Pass the selected object to the new view controller.
-  [[NSNotificationCenter defaultCenter] postNotificationName:TweetClicked object:nil userInfo:[NSDictionary dictionaryWithObject:self.tweets[indexPath.row] forKey:@"tweet"]];
+  [[NSNotificationCenter defaultCenter] postNotificationName:TweetClicked object:self.tweets[indexPath.row] userInfo:[NSDictionary dictionaryWithObject:self.tweets[indexPath.row] forKey:@"tweet"]];
   
   // Push the view controller.
   [self.navigationController pushViewController:tweetViewController animated:YES];

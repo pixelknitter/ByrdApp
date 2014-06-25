@@ -11,4 +11,6 @@
 
 @interface TweetViewController : UIViewController
 
+@property (nonatomic, strong)  Tweet *tweet;
+
 @end
