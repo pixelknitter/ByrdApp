@@ -24,6 +24,14 @@ Time spent: 14 hours spent in total
 * [x] Replies should be prefixed with the username and the reply_id should be set when posting the tweet,
 * [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 
+## Installation
+
+1. Add TwitterAPI.plist
+2. Add **Consumer Key** with key "TWITTER_CONSUMER_KEY"
+3. Add **Consumer Secret** with key "TWITTER_CONSUMER_SECRET"
+4. Install pods from Podlist
+5. Launch
+
 Walkthrough of all user stories:
 
 **Portrait**
