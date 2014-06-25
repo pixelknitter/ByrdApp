@@ -8,9 +8,11 @@
 
 // Notification Constants
 static NSString *UserLoggedInNotification = @"UserLoggedInNotification";
+static NSString *UserSignOutNotification = @"UserSignOutNotification";
+static NSString *NewTweetCreatedNotification = @"NewTweetCreatedNotification";
 static NSString *ComposeClicked = @"ComposeClicked";
 static NSString *TweetClicked = @"TweetClicked";
-static NSString *UserSignOutNotification = @"UserSignOutNotification";
+
 //static NSString *EmptyNotification = @"EmptyNotification";
 
 // User Default Keys

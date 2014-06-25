@@ -28,14 +28,14 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="@username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="PjB-U4-yUK">
-                        <rect key="frame" x="100" y="5" width="70" height="16"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="248" verticalHuggingPriority="251" horizontalCompressionResistancePriority="746" text="@username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="PjB-U4-yUK">
+                        <rect key="frame" x="100" y="5" width="182" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cg-wd-brI">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cg-wd-brI">
                         <rect key="frame" x="61" y="5" width="34" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -116,6 +116,7 @@
                     <constraint firstItem="sRm-3G-vmd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Fae-fJ-C8m"/>
                     <constraint firstItem="Thv-qM-q8X" firstAttribute="top" secondItem="1Sb-5X-i2D" secondAttribute="bottom" constant="8" id="Gdj-Ru-SZd"/>
                     <constraint firstItem="ypJ-Ng-F5E" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="LLe-1B-Rjv"/>
+                    <constraint firstItem="ypJ-Ng-F5E" firstAttribute="leading" secondItem="PjB-U4-yUK" secondAttribute="trailing" constant="5" id="Lm2-BR-lJk"/>
                     <constraint firstItem="0cg-wd-brI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Lsd-XK-1B9"/>
                     <constraint firstItem="PjB-U4-yUK" firstAttribute="leading" secondItem="0cg-wd-brI" secondAttribute="trailing" constant="5" id="RSz-uH-ZIn"/>
                     <constraint firstAttribute="trailing" secondItem="Thv-qM-q8X" secondAttribute="trailing" constant="29" id="fWb-wD-LVo"/>

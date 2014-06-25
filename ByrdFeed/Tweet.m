@@ -64,29 +64,4 @@
   return tweets;
 }
 
-
-
-//- (NSString *)getTimeSinceString {
-//  NSDate *todayDate = [NSDate date];
-//  double ti = [self.createdAt timeIntervalSinceDate:todayDate];
-//  ti = ti * -1;
-//  if(ti < 1) {
-//    return @"bt";
-//  } else 	if (ti < 60) {
-//    int diff = round(ti);
-//    return [NSString stringWithFormat:@"%ds", diff];
-//  } else if (ti < 3600) {
-//    int diff = round(ti / 60);
-//    return [NSString stringWithFormat:@"%dm", diff];
-//  } else if (ti < 86400) {
-//    int diff = round(ti / 60 / 60);
-//    return[NSString stringWithFormat:@"%dh", diff];
-//  } else if (ti < 2629743) {
-//    int diff = round(ti / 60 / 60 / 24);
-//    return[NSString stringWithFormat:@"%dd", diff];
-//  } else {
-//    return @"a while";
-//  }
-//}
-
 @end

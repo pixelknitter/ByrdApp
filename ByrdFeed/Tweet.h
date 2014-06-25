@@ -24,6 +24,4 @@
 
 + (NSArray *)tweetsWithArray:(NSArray *)array;
 
-- (NSString *)getTimeSinceString;
-
 @end

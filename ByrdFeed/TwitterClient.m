@@ -53,6 +53,7 @@ static NSString *TWITTER_CONSUMER_SECRET;
 
 @property (nonatomic, strong) PersistencyManager *persistencyManager;
 @property (nonatomic, strong) TwitterClient *client;
+//@property (nonatomic, strong) User *currentUser;
 
 @end
 

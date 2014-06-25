@@ -60,6 +60,8 @@
   // Set Sign Out Button
   UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(signOutClicked)];
   
+  signOutButton.tintColor = [UIColor whiteColor];
+  
   self.navigationItem.leftBarButtonItem = signOutButton;
   
   /* allow refresh on swipe down */
@@ -72,7 +74,7 @@
   
   // Add Compose Button
   UIBarButtonItem *composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onComposeButton)];
-  
+  composeButton.tintColor = [UIColor whiteColor];
   self.navigationItem.rightBarButtonItem = composeButton;
   
   // Set delegates and data source
