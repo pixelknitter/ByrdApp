@@ -75,4 +75,4 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Personal Notes
 
-* TODO
+* Found an issue with my user persistence that I wasn't able to debug in time for turn in.
