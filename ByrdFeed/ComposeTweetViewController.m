@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 NinjaSudo Inc. All rights reserved.
 //
 
+#define TWEET_CHARACTER_COUNT 140
+
 #import "ComposeTweetViewController.h"
 #import "TSMessage.h"
 #import "TwitterClient.h"
@@ -50,7 +52,7 @@
   tweetButton.enabled = false;
   tweetButton.tintColor = [UIColor whiteColor];
   
-  self.characterCount = [[UIBarButtonItem alloc] initWithTitle:@"140" style:UIBarButtonItemStylePlain target:self action:nil];
+  self.characterCount = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d", TWEET_CHARACTER_COUNT - _replyTo.length] style:UIBarButtonItemStylePlain target:self action:nil];
   self.characterCount.enabled = false;
   self.characterCount.tintColor = [UIColor whiteColor];
 
@@ -58,6 +60,14 @@
   self.navigationItem.title = @"Compose Tweet";
   self.navigationItem.leftBarButtonItem = cancelButton;
   self.navigationItem.rightBarButtonItem = tweetButton;
+  
+  self.navigationItem.rightBarButtonItems = @[tweetButton, self.characterCount];
+  
+  if (_replyTo != nil){
+    self.tweetTextField.text = [_replyTo stringByAppendingString:@" "];
+  }else{
+    self.tweetTextField.text = @"";
+  }
   
   // Get Current User
   User *user = [[TwitterClient sharedInstance] getCurrentUser];
