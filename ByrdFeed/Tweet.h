@@ -12,13 +12,18 @@
 @interface Tweet : MTLModel <MTLJSONSerializing>
 
 @property (strong, nonatomic) NSString *tweetID;
+@property (strong, nonatomic) NSString *createdAt;
+@property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) NSString *userName;
-@property (strong, nonatomic) NSString *profileImageURL;
+@property (strong, nonatomic) NSString *screenName;
 @property (strong, nonatomic) NSString *location;
-@property (nonatomic) NSInteger tweetCount;
-@property (nonatomic) NSInteger followingCount;
-@property (nonatomic) NSInteger followerCount;
+@property (strong, nonatomic) NSURL *profileImageURL;
+@property (nonatomic, assign) NSInteger followerCount;
+@property (nonatomic, assign) NSInteger favoritesCount;
+@property (nonatomic, assign) NSInteger retweetCount;
 
 + (NSArray *)tweetsWithArray:(NSArray *)array;
+
+- (NSString *)getTimeSinceString;
 
 @end

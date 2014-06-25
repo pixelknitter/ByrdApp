@@ -110,9 +110,9 @@ static NSString *TWITTER_CONSUMER_SECRET;
   return [_persistencyManager getTweets];
 }
 
-- (void) login {
+- (void)login {
   /* remove any existing auth tokens */
-	[self.requestSerializer removeAccessToken];
+	[self deauthorize];
   
   NSURL *tokenCallbackURL = [NSURL URLWithString:[[APP_SCHEME stringByAppendingString:@"://"] stringByAppendingString:TOKEN_CALLBACK_PATH]];
   
@@ -129,6 +129,10 @@ static NSString *TWITTER_CONSUMER_SECRET;
   } failure:^(NSError *error) {
     NSLog(@"Failure: %@", error);
   }];
+}
+
+- (BOOL)isLoggedIn {
+  return [[TwitterClient sharedInstance] getCurrentUser] && [TwitterClient sharedInstance].authorized;
 }
 
 - (BOOL)processAuthResponseURL:(NSURL *)url onSuccess:(void (^)(void))success{
@@ -207,7 +211,7 @@ static NSString *TWITTER_CONSUMER_SECRET;
 }
 
 - (User *)getCurrentUser {
-  return User.currentUser;
+  return [User currentUser];
 }
 
 @end

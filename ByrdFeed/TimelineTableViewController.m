@@ -7,6 +7,7 @@
 //
 
 #import "TimelineTableViewController.h"
+#import "LoginViewController.h"
 #import "TweetViewController.h"
 #import "ComposeTweetViewController.h"
 #import "MBProgressHUD.h"
@@ -32,9 +33,7 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     // Set up Subscriptions
-    
-    
-    // Set up data storage
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchTweets) name:UserLoggedInNotification object:nil];
     
     // Set up TSMessage Defaults
     [TSMessage setDefaultViewController:self];
@@ -47,14 +46,15 @@
   [super viewWillAppear:state];
   
   // TODO update when refresh or data retrieval event fires
+  
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
 
-  if (self.tweets.count == 0){
-    self.timelineTableView.hidden = true;
+  if([[TwitterClient sharedInstance] isLoggedIn]) {
+    [self fetchTweets];
   }
 
   // Set Sign Out Button
@@ -117,8 +117,10 @@
 {
   Tweet *tweet = self.tweets[indexPath.row];
   cell.nameLabel.text = tweet.userName;
-  cell.userLabel.text = [User getFormattedUserName:tweet.userName];
-  [Utils loadImageUrl:[[NSURL alloc] initWithString:tweet.profileImageURL] inImageView:cell.profileImage withAnimation:YES];
+  cell.userLabel.text = [User getFormattedUserName:tweet.screenName];
+  [Utils loadImageUrl:tweet.profileImageURL inImageView:cell.profileImage withAnimation:YES];
+  cell.tweetLabel.text = tweet.text;
+  cell.sinceLabel.text = tweet.createdAt;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -175,12 +177,13 @@
 
 #pragma mark - Data
 - (void)fetchTweets {
+  NSLog(@"Fetching Tweets...");
   if(!self.refreshControl.isRefreshing) {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   }
   
   [[TwitterClient sharedInstance] getWithEndpointType:TwitterClientEndpointTimeline success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    NSLog(@"%@", responseObject);
+//    NSLog(@"%@", responseObject);
     
     self.tweets = [Tweet tweetsWithArray:responseObject];
     
@@ -191,6 +194,13 @@
                                              type:TSMessageNotificationTypeWarning
                                          duration:1.f];
     }
+    
+    if (self.tweets.count == 0){
+      self.timelineTableView.hidden = true;
+    }
+    
+    // Go back to Top of TableView
+    [self.timelineTableView scrollRectToVisible:CGRectMake(0, 0, self.tableView.frame.size.width, 10) animated:NO];
     
     [self.timelineTableView reloadData];
     // hide HUD
@@ -208,19 +218,19 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
   }];
   
-  // Go back to Top of TableView
-  [self.timelineTableView scrollRectToVisible:CGRectMake(0, 0, self.tableView.frame.size.width, 10) animated:NO];
+  
 }
 
 
 #pragma mark - Button Selectors
 - (void)signOutClicked {
-  [[TwitterClient sharedInstance].requestSerializer removeAccessToken];
-  
-#warning TODO remove NSUserDefaults
-#warning TODO remove currentUser
-  
+  // Deauthorize and more
+  [[TwitterClient sharedInstance] deauthorize];
+  [User resetCurrentUser];
   [[NSNotificationCenter defaultCenter] postNotificationName:UserSignOutNotification object:nil userInfo:nil];
+  // Pop View Controller
+  LoginViewController *loginViewController = [[LoginViewController alloc] init];
+  [self.navigationController pushViewController:loginViewController animated:YES];
 }
 
 - (void)onComposeButton {

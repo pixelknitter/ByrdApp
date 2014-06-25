@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ComposeTweetViewController : UIViewController
+@interface ComposeTweetViewController : UIViewController <UITextFieldDelegate>
 
 @end

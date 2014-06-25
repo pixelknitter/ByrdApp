@@ -16,9 +16,8 @@
 @property (strong, nonatomic) NSString *location;
 //@property (strong, nonatomic) NSString *profileBackgroundColor;
 //@property (strong, nonatomic) NSString *profileBackgroundImageURL;
-@property (strong, nonatomic) NSString *profileImageURL;
+@property (strong, nonatomic) NSURL *profileImageURL;
 @property (nonatomic, assign) NSInteger userID;
-//@property (nonatomic, assign) NSInteger followingCount;
 @property (nonatomic, assign) NSInteger followersCount;
 @property (nonatomic, assign) NSInteger tweetCount;
 
@@ -26,6 +25,7 @@
 + (NSString *)getFormattedUserName:(NSString *)userName;
 
 - (void)setAsCurrentUser;
++ (BOOL)resetCurrentUser;
 
 + (User*)initWithDictionary:(NSDictionary *)userDictionary;
 

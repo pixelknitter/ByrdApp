@@ -9,6 +9,8 @@
 #import "User.h"
 #import "Constants.h"
 
+#define CURRENT_USER_KEY @"current_user"
+
 @implementation User
 
 static User *currentUser = nil;
@@ -18,27 +20,18 @@ static User *currentUser = nil;
            @"userID"          : @"id",
            @"realName"        : @"name",
            @"userName"        : @"screen_name",
-           @"tweetCount"      : @"statuses_count",
-           @"followerCount"   : @"followers_count",
+//           @"tweetCount"      : @"statuses_count",
+//           @"followerCount"   : @"follower_count",
            @"profileImageURL" : @"profile_image_url",
            @"location"        : @"location",
            @"description"     : @"description"
            };
 }
 
-//@property (nonatomic, strong) NSString *userName;
-//@property (nonatomic, strong) NSString *description;
-//@property (nonatomic, assign) NSInteger followersCount;
-//@property (nonatomic, strong) NSString *realName;
-//@property (nonatomic, strong) NSString *location;
-//@property (nonatomic, strong) NSString *profileBackgroundColor;
-//@property (nonatomic, strong) NSString *profileBackgroundImageURL;
-//@property (nonatomic, strong) NSString *profileImageURL;
-//@property (nonatomic, assign) NSInteger followingCount;
-//@property (nonatomic, assign) NSInteger tweetCount;
-
 + (NSValueTransformer *)profileImageURLJSONTransformer {
-  return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+  return [MTLValueTransformer reversibleTransformerWithBlock:^id(NSString *str) {
+    return [NSURL URLWithString:[str stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]];
+  }];
 }
 
 + (User*)initWithDictionary:(NSDictionary *)userDictionary {
@@ -72,11 +65,20 @@ static User *currentUser = nil;
 
 + (User *)currentUser {
   if (currentUser == nil){
-    NSData *archivedObject = [[NSUserDefaults standardUserDefaults] objectForKey:@"current_user"];
+    NSData *archivedObject = [[NSUserDefaults standardUserDefaults] objectForKey:CURRENT_USER_KEY];
     currentUser = (User *)[NSKeyedUnarchiver unarchiveObjectWithData:archivedObject];
 	}
   
 	return currentUser;
+}
+
++ (BOOL)resetCurrentUser {
+  if (currentUser != nil) {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:CURRENT_USER_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    currentUser = nil;
+  }
+  return YES;
 }
 
 + (NSString *)getFormattedUserName:(NSString *)userName {

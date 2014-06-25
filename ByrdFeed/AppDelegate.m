@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "TimelineTableViewController.h"
+#import "TSMessage.h"
 #import "Constants.h"
 
 @implementation AppDelegate
@@ -18,7 +19,8 @@
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
   /* check if we have a current user, if not login */
-  if (![[TwitterClient sharedInstance] getCurrentUser]){
+  
+  if (![[TwitterClient sharedInstance] isLoggedIn]){
     [[TwitterClient sharedInstance] login];
   }
   else {
@@ -64,9 +66,7 @@
     /* get user */
     [[TwitterClient sharedInstance] getWithEndpointType:TwitterClientEndpointUser success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
-      [[NSNotificationCenter defaultCenter] addObserver:self
-                                               selector:@selector(showTimeline)
-                                                   name:UserLoggedInNotification object:nil];
+      [[NSNotificationCenter defaultCenter] postNotificationName:UserLoggedInNotification object:nil];
       NSLog(@"Response: %@", responseObject);
       [[User initWithDictionary:responseObject] setAsCurrentUser];
       
@@ -79,6 +79,7 @@
 }
 
 - (void) showTimeline {
+  NSLog(@"Show Timeline");
   TimelineTableViewController *tvc = [[TimelineTableViewController alloc] init];
 
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tvc];
@@ -86,11 +87,12 @@
   self.window.backgroundColor = tvc.view.backgroundColor;
 
   /* add the tweet colors to things */
-  [nav.navigationBar setBarTintColor:tvc.view.backgroundColor];
+  UIColor * lightBlueColor = [UIColor colorWithRed:90/255.0f green:192/255.0f blue:251/255.0f alpha:1.0f];
+  [nav.navigationBar setBarTintColor:lightBlueColor];
+  [nav.navigationBar setTintColor:[UIColor blackColor]];
+  [nav.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
   [nav.navigationBar setTranslucent:YES];
-  [nav.navigationBar setBarStyle:UIBarStyleBlack];
   
-  NSLog(@"Add TimeLine to View");
   self.window.rootViewController = nav;
 }
 

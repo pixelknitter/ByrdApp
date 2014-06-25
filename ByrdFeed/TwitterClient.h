@@ -28,12 +28,12 @@ typedef enum  {
 
 + (TwitterClient *)sharedInstance;
 
-- (User *)getCurrentUser;
-
 - (BOOL)processAuthResponseURL:(NSURL *)url onSuccess:(void (^)(void))success;
 - (AFHTTPRequestOperation *)getWithEndpointType:(TwitterClientEndpointType)endpointType success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (AFHTTPRequestOperation *)postWithEndpointType:(TwitterClientEndpointType)endpointType parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
-- (void) login;
+- (void)login;
+- (BOOL)isLoggedIn;
+- (User *)getCurrentUser;
 
 @end
