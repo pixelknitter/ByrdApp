@@ -26,11 +26,17 @@ Time spent: 14 hours spent in total
 
 Walkthrough of all user stories:
 
+**Portrait**
 ![Video Walkthrough](https://raw.githubusercontent.com/NinjaSudo/ByrdApp/master/demo.gif)
+
+**Landscape**
+![Video Walkthrough](https://raw.githubusercontent.com/NinjaSudo/ByrdApp/master/demo_landscape.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 **Notes**
+* Had an issue with ComposeView where the carat didn't display at the top left of the TextView.
+* Sign Out causes a crash on subsequent loads until deleted and loaded again.
 
 ## Resources Used
 
@@ -42,6 +48,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 * [POP](https://github.com/facebook/pop)
 * [LBBlurredImage](https://github.com/lukabernardi/LBBlurredImage)
 * [TSMessages](https://github.com/toursprung/TSMessages)
+* [Crittercism](http://www.crittercism.com)
 
 ### APIs
 
