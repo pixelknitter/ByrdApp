@@ -27,9 +27,11 @@ Time spent: 14 hours spent in total
 Walkthrough of all user stories:
 
 **Portrait**
+
 ![Video Walkthrough](https://raw.githubusercontent.com/NinjaSudo/ByrdApp/master/demo.gif)
 
 **Landscape**
+
 ![Video Walkthrough](https://raw.githubusercontent.com/NinjaSudo/ByrdApp/master/demo_landscape.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
