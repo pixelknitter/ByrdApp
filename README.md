@@ -61,9 +61,6 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 * http://code.tutsplus.com/tutorials/ios-sdk-working-with-nsuserdefaults--mobile-6039
 * https://www.youtube.com/watch?v=bJ5wtDBfF6I
 
-#### Tinkering
-* http://stackoverflow.com/questions/11908688/ios-php-login-best-practice
-
 ### Tools
 
 * http://www.hurl.it/
@@ -75,4 +72,4 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Personal Notes
 
-* Found an issue with my user persistence that I wasn't able to debug in time for turn in.
+* Found an issue with my user persistence that I wasn't able to debug in time for turn in. When I use the sign out button, it causes the bug to present itself.
