@@ -53,7 +53,7 @@
   self.characterCount = [[UIBarButtonItem alloc] initWithTitle:@"140" style:UIBarButtonItemStylePlain target:self action:nil];
   self.characterCount.enabled = false;
   self.characterCount.tintColor = [UIColor whiteColor];
-  
+
   // setup the navigation bar
   self.navigationItem.title = @"Compose Tweet";
   self.navigationItem.leftBarButtonItem = cancelButton;
@@ -117,12 +117,7 @@
   } completion:nil];
 }
 
-#pragma UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  [textField resignFirstResponder];
-  return NO;
-}
+#pragma UITextViewDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
   if (textView.text.length + text.length > 140){
@@ -133,10 +128,5 @@
   self.navigationItem.rightBarButtonItem.enabled = true;
   return YES;
 }
-
-//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-//#warning if reply, add the reply signature here
-//  return YES;
-//}
 
 @end

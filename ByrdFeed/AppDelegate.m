@@ -11,13 +11,16 @@
 #import "TimelineTableViewController.h"
 #import "TSMessage.h"
 #import "Constants.h"
+#import "Crittercism.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [Crittercism enableWithAppID:@"53aa5adf07229a27ad000002"];
+  
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
+  
   /* check if we have a current user, if not login */
   
   if (![[TwitterClient sharedInstance] isLoggedIn]){
