@@ -13,4 +13,5 @@ static NSString *TweetClicked = @"TweetClicked";
 static NSString *UserSignOutNotification = @"UserSignOutNotification";
 //static NSString *EmptyNotification = @"EmptyNotification";
 
-//
+// User Default Keys
+#define CURRENT_USER_KEY @"current_user"

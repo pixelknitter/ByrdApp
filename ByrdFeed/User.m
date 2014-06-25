@@ -9,8 +9,6 @@
 #import "User.h"
 #import "Constants.h"
 
-#define CURRENT_USER_KEY @"current_user"
-
 @implementation User
 
 static User *currentUser = nil;
@@ -39,6 +37,7 @@ static User *currentUser = nil;
   
   User *user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:userDictionary error:&error];
   if(!error) {
+    
     return user;
   } else {
     NSLog(@"%@", error);
@@ -67,6 +66,7 @@ static User *currentUser = nil;
   if (currentUser == nil){
     NSData *archivedObject = [[NSUserDefaults standardUserDefaults] objectForKey:CURRENT_USER_KEY];
     currentUser = (User *)[NSKeyedUnarchiver unarchiveObjectWithData:archivedObject];
+    NSLog(@"User Grabbed: %@", currentUser.userName);
 	}
   
 	return currentUser;

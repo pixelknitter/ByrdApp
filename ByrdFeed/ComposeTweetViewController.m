@@ -7,12 +7,17 @@
 //
 
 #import "ComposeTweetViewController.h"
+#import "TwitterClient.h"
 #import "Constants.h"
 #import "Tweet.h"
 #import "User.h"
+#import "Utils.h"
 
 @interface ComposeTweetViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *tweetTextField;
+@property (weak, nonatomic) IBOutlet UILabel *userLabel;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 
 @end
 
@@ -32,8 +37,17 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view from its nib.
   
+  // Get Current User
+  User *user = [[TwitterClient sharedInstance] getCurrentUser];
+  
+  // load user data
+  [Utils loadImageUrl:user.profileImageURL inImageView:self.profileImageView withAnimation:YES];
+  
+  self.userLabel.text = user.realName;
+  self.usernameLabel.text = [User getFormattedUserName:user.userName];
+  
   // setup the navigation bar
-  self.navigationItem.title = @"Home";
+  self.navigationItem.title = @"Compose Tweet";
   UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(cancel)];
   UIBarButtonItem *tweetButton = [[UIBarButtonItem alloc] initWithTitle:@"Tweet" style:UIBarButtonItemStyleDone target:self action:@selector(sendTweet)];
   self.navigationItem.leftBarButtonItem = cancelButton;
