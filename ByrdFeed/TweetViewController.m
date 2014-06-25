@@ -20,6 +20,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *retweetsCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *favoritesCountLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+
 @property (nonatomic, assign) BOOL showStatus;
 
 - (IBAction)replyButton:(id)sender;
@@ -50,6 +53,14 @@
     self.showStatus = false;
   }
   
+  if (_tweet.isFavorited) {
+    [self.favoriteButton setImage:[UIImage imageNamed:@"favorite_on.png"] forState:UIControlStateSelected];
+  }
+  
+  if (_tweet.isRetweeted) {
+    [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on.png"] forState:UIControlStateSelected];
+  }
+  
   self.usernameLabel.text = _tweet.screenName;
   self.userLabel.text = _tweet.userName;
   self.tweetLabel.text = _tweet.text;
@@ -65,20 +76,29 @@
 }
 
 - (IBAction)replyButton:(id)sender {
-}
-
-- (IBAction)retweetButton:(id)sender {
-}
-
-- (IBAction)favoriteButton:(id)sender {
-}
-
-
-- (void) didClickReply:(Tweet *)replyCell {
   [self onComposeButton];
 }
 
-- (void) didClickRetweet:(Tweet *)tweet {
+- (IBAction)retweetButton:(id)sender {
+  if (![sender isSelected]) {
+    [sender setImage:[UIImage imageNamed:@"retweet_on.png"] forState:UIControlStateSelected];
+    [sender setSelected:YES];
+    [self didClickRetweet];
+  }
+}
+
+- (IBAction)favoriteButton:(id)sender {
+  if ([sender isSelected]) {
+    [sender setImage:[UIImage imageNamed:@"favorite.png"] forState:UIControlStateNormal];
+    [sender setSelected:NO];
+  } else {
+    [sender setImage:[UIImage imageNamed:@"favorite_on.png"] forState:UIControlStateSelected];
+    [sender setSelected:YES];
+  }
+  [self didClickFavorite];
+}
+
+- (void) didClickRetweet {
   
   [[TwitterClient sharedInstance] postWithEndpointType:TwitterClientEndpointRetweet parameters:
    @{
@@ -86,10 +106,9 @@
      } success:^(AFHTTPRequestOperation *operation, id responseObject){
        _tweet.isRetweeted = true;
        _tweet.retweetCount++;
-       
+       NSLog(@"Success");
+       self.retweetsCountLabel.text = [NSString stringWithFormat:@"%d", _tweet.retweetCount];
        self.showStatus = true;
-//       [self.tweetTable reloadData];
-       
        /* update retweet icon */
      } failure:^(AFHTTPRequestOperation *operation, NSError *error){
        NSLog(@"Error tweeting: %@", error);
@@ -98,31 +117,15 @@
   
 }
 
-- (void) didClickFavorite:(Tweet *)tweet {
+- (void) didClickFavorite {
   
-  TwitterClientEndpointType type = tweet.isFavorited ? TwitterClientEndpointUnfavorite : TwitterClientEndpointFavorite;
-  
-  _tweet.isFavorited = !tweet.isFavorited;
-  if (_tweet.isFavorited){
-    _tweet.favoritesCount++;
-    self.showStatus = true;
-  }else{
-    _tweet.favoritesCount--;
-    if (_tweet.favoritesCount == 0){
-      self.showStatus = false;
-    }
-  }
-  
+  TwitterClientEndpointType type = _tweet.isFavorited ? TwitterClientEndpointUnfavorite : TwitterClientEndpointFavorite;
+
   [[TwitterClient sharedInstance] postWithEndpointType:type parameters:
    @{
-     @"id": tweet.tweetID
+     @"id": _tweet.tweetID
      } success:^(AFHTTPRequestOperation *operation, id responseObject){
-       
-       
-       /* update retweet icon */
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error){
-       
-       _tweet.isFavorited = !tweet.isFavorited;
+       _tweet.isFavorited = !_tweet.isFavorited;
        if (_tweet.isFavorited){
          _tweet.favoritesCount++;
          self.showStatus = true;
@@ -132,6 +135,9 @@
            self.showStatus = false;
          }
        }
+       self.favoritesCountLabel.text = [NSString stringWithFormat:@"%d", _tweet.favoritesCount];
+       /* update retweet icon */
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error){
        NSLog(@"Error tweeting: %@", error);
      }];
   
@@ -142,13 +148,13 @@
 
 - (void) onComposeButton {
   ComposeTweetViewController *composeView = [[ComposeTweetViewController alloc] init];
-//  composeView.replyTo = [ASUser getFormattedScreenName:self.tweet.user.screenName];
-//  composeView.replyIdStr = self.tweet.tweetIdStr;
+  composeView.replyTo = [User getFormattedUserName:_tweet.screenName];
+  composeView.replyIdStr = self.tweet.tweetID;
   
-  [UIView  beginAnimations: @"ShowCompose"context: nil];
-  [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
+  [UIView  beginAnimations:@"ShowCompose" context: nil];
+  [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
   [UIView setAnimationDuration:0.75];
-  [self.navigationController pushViewController: composeView animated:NO];
+  [self.navigationController pushViewController:composeView animated:NO];
   [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.navigationController.view cache:NO];
   [UIView commitAnimations];
 }

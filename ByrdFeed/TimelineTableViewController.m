@@ -118,6 +118,15 @@
 - (void)configureCell:(TweetCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
   Tweet *tweet = self.tweets[indexPath.row];
+  
+  if (tweet.isFavorited) {
+    [cell.favoriteButton setImage:[UIImage imageNamed:@"favorite_on.png"] forState:UIControlStateSelected];
+  }
+  
+  if (tweet.isRetweeted) {
+    [cell.retweetButton setImage:[UIImage imageNamed:@"retweet_on.png"] forState:UIControlStateSelected];
+  }
+  
   cell.nameLabel.text = tweet.userName;
   cell.userLabel.text = [User getFormattedUserName:tweet.screenName];
   [Utils loadImageUrl:tweet.profileImageURL inImageView:cell.profileImage withAnimation:YES];

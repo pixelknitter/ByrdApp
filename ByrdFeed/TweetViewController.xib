@@ -6,8 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetViewController">
             <connections>
+                <outlet property="favoriteButton" destination="f1v-WP-gBl" id="mi9-iv-r1Q"/>
                 <outlet property="favoritesCountLabel" destination="9sD-Kw-qjw" id="bdW-7B-vJf"/>
                 <outlet property="profileImageView" destination="Lin-ov-44y" id="1Zw-id-0EE"/>
+                <outlet property="retweetButton" destination="bBZ-4p-P8c" id="m4M-Fs-86M"/>
                 <outlet property="retweetsCountLabel" destination="gpJ-i2-peR" id="gKa-Aw-JGf"/>
                 <outlet property="tweetLabel" destination="03H-eL-dcS" id="H6j-jU-MXu"/>
                 <outlet property="userLabel" destination="QKC-ge-a22" id="Tqu-8l-0jZ"/>

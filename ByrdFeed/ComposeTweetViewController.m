@@ -91,8 +91,8 @@
 - (void)sendTweet {
   [[TwitterClient sharedInstance] postWithEndpointType:TwitterClientEndpointAddTweet
                                             parameters:@{
-                                                         @"status": self.tweetTextField.text
-                                                         //@"in_reply_to_status_id": _replyIdStr ? _replyIdStr : @""
+                                                         @"status": self.tweetTextField.text,
+                                                         @"in_reply_to_status_id": _replyIdStr ? _replyIdStr : @""
                                                          }
                                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                                  Tweet *newTweet = [[Tweet alloc] initWithDictionary:responseObject];

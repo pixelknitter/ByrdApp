@@ -10,4 +10,7 @@
 
 @interface ComposeTweetViewController : UIViewController <UITextViewDelegate>
 
+@property (strong, nonatomic) NSString *replyTo;
+@property (strong, nonatomic) NSString *replyIdStr;
+
 @end

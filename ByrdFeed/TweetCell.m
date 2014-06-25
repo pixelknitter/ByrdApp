@@ -8,10 +8,16 @@
 
 #import "TweetCell.h"
 
+@interface TweetCell()
+
+@end
+
 @implementation TweetCell
 
 - (void)awakeFromNib
 {
+  
+  
     // Initialization code
 }
 
@@ -23,14 +29,14 @@
 }
 
 - (IBAction)retweetButton:(id)sender {
-  
+  // TODO
 }
 
 - (IBAction)favoriteButton:(id)sender {
-  
+  // TODO
 }
 
 - (IBAction)replyButton:(id)sender {
-  
+  // TODO
 }
 @end
