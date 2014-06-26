@@ -40,7 +40,6 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
   self.tweetTextField.delegate = self;
   
   UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
@@ -137,6 +136,10 @@
   
   self.navigationItem.rightBarButtonItem.enabled = true;
   return YES;
+}
+
+- (BOOL)automaticallyAdjustsScrollViewInsets {
+  return NO;
 }
 
 @end

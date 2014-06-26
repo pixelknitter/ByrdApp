@@ -262,6 +262,7 @@
   
   [[NSNotificationCenter defaultCenter] postNotificationName:ComposeClicked object:nil userInfo:params];
   
+//  [self presentViewController:composeViewController animated:YES completion:nil]
   [self.navigationController pushViewController:composeViewController animated:YES];
 }
 

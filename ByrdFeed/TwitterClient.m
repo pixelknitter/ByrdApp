@@ -23,6 +23,9 @@
 #define GET_TIMELINE_URL @"1.1/statuses/home_timeline.json"
 #define POST_STATUS_UPDATE_URL @"1.1/statuses/update.json"
 #define POST_STATUS_RETWEET_URL @"1.1/statuses/retweet/%@.json"
+#define GET_STATUS_RETWEETS_URL @"1.1/statuses/retweets/%@.json"
+#define POST_STATUS_UNTWEET_URL @"1.1/statuses/destroy/{id}.json"
+
 #define POST_STATUS_FAVORITE_URL @"1.1/favorites/create.json"
 #define POST_STATUS_UNFAVORITE_URL @"1.1/favorites/destroy.json"
 #define GET_MENTIONS_URL @"1.1/statuses/mentions_timeline.json"

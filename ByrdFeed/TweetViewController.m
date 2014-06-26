@@ -49,7 +49,8 @@
   
   if (_tweet.retweetCount > 0 || _tweet.favoritesCount > 0){
     self.showStatus = true;
-  }else{
+  }
+  else{
     self.showStatus = false;
   }
   
