@@ -32,22 +32,22 @@
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    // Set up Subscriptions
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchTweets) name:UserLoggedInNotification object:nil];
-    
     // Set up TSMessage Defaults
     [TSMessage setDefaultViewController:self];
     [TSMessage iOS7StyleEnabled];
+    
   }
   return self;
 }
 
 - (void)viewWillAppear:(BOOL)state {
   [super viewWillAppear:state];
-  
+  [self.tableView reloadData];
   // TODO update when refresh or data retrieval event fires
   
 }
+
+
 
 - (void)viewDidLoad
 {
@@ -55,6 +55,10 @@
 
   if([[TwitterClient sharedInstance] isLoggedIn]) {
     [self fetchTweets];
+  }
+  else {
+    [TSMessage showNotificationInViewController:self title:@"" subtitle:@"" type:TSMessageNotificationTypeWarning duration:1.0 canBeDismissedByUser:YES];
+#warning Add TSMessage that lets them reload without a tableview visible
   }
 
   // Set Sign Out Button
@@ -86,12 +90,6 @@
   [self.timelineTableView registerNib:cellNib forCellReuseIdentifier:@"TweetCell"];
   
   self.stubCell = [cellNib instantiateWithOwner:nil options:nil][0];
-  
-  // Uncomment the following line to preserve selection between presentations.
-  // self.clearsSelectionOnViewWillAppear = NO;
-  
-  // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-  // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,10 +119,12 @@
   
   if (tweet.isFavorited) {
     [cell.favoriteButton setImage:[UIImage imageNamed:@"favorite_on.png"] forState:UIControlStateSelected];
+    cell.favoriteButton.selected = YES;
   }
   
   if (tweet.isRetweeted) {
     [cell.retweetButton setImage:[UIImage imageNamed:@"retweet_on.png"] forState:UIControlStateSelected];
+    cell.retweetButton.selected = YES;
   }
   
   cell.nameLabel.text = tweet.userName;
@@ -168,6 +168,7 @@
   return YES;
 }
 */
+#pragma mark - Notification
 
 
 #pragma mark - Table view delegate
@@ -178,13 +179,21 @@
   // Create the next view controller.
   TweetViewController *tweetViewController = [[TweetViewController alloc] initWithNibName:nil bundle:nil];
   tweetViewController.tweet = self.tweets[indexPath.row];
+  
   // Pass the selected object to the new view controller.
-  [[NSNotificationCenter defaultCenter] postNotificationName:TweetClicked object:self.tweets[indexPath.row] userInfo:[NSDictionary dictionaryWithObject:self.tweets[indexPath.row] forKey:@"tweet"]];
+//  [[NSNotificationCenter defaultCenter] postNotificationName:TweetClicked object:self.tweets[indexPath.row] userInfo:[NSDictionary dictionaryWithObject:self.tweets[indexPath.row] forKey:@"tweet"]];
+#warning this doesn't work
   
   // Push the view controller.
   [self.navigationController pushViewController:tweetViewController animated:YES];
 }
 
+#warning Infinite scroll, requires me to get the last Tweet ID and pass to the client to paginate
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+//  if (indexPath.row == self.tweets.count -1) {
+//    [self refreshTweets:self.tweets[self.tweets.count -1][@"id"]];
+//  }
+//}
 
 #pragma mark - Data
 - (void)fetchTweets {
@@ -228,10 +237,7 @@
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
   }];
-  
-  
 }
-
 
 #pragma mark - Button Selectors
 - (void)signOutClicked {
@@ -241,24 +247,26 @@
   [[NSNotificationCenter defaultCenter] postNotificationName:UserSignOutNotification object:nil userInfo:nil];
   // Pop View Controller
   LoginViewController *loginViewController = [[LoginViewController alloc] init];
-  [self.navigationController pushViewController:loginViewController animated:YES];
+  [self presentViewController:loginViewController animated:YES completion:nil];
 }
 
 - (void)onComposeButton {
+  NSLog(@"Compose a new Tweet clicked");
+  [Crittercism leaveBreadcrumb:@""];
   [self onComposeButtonWithReply:nil];
 }
 
 - (void)onComposeButtonWithReply:(Tweet *)tweet {
-  NSLog(@"Reply clicked");
   ComposeTweetViewController *composeViewController = [[ComposeTweetViewController alloc] initWithNibName:nil bundle:nil];
   NSDictionary *params = nil;
   
-//  if (tweet != nil){
-//    params = [NSDictionary dictionaryWithObject:@{
-//                                                  @"replyIdStr": tweet.tweetIdStr,
-//                                                  @"replyTo": tweet.user.screenName
-//                                                  } forKey:@"compose"];
-//  }
+  if (tweet != nil) {
+    [Crittercism leaveBreadcrumb:[NSString stringWithFormat:@"Compose w/ Reply to: %@@", tweet.screenName]];
+    params = [NSDictionary dictionaryWithObject:@{
+                                                  @"replyIdStr": tweet.tweetID,
+                                                  @"replyTo": tweet.screenName
+                                                  } forKey:@"compose"];
+  }
   
   [[NSNotificationCenter defaultCenter] postNotificationName:ComposeClicked object:nil userInfo:params];
   

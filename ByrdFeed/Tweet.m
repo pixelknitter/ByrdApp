@@ -21,7 +21,7 @@
            @"isRetweeted"       : @"retweeted",
            @"isFavorited"       : @"favorited",
            @"retweetCount"      : @"retweet_count",
-           @"favoritesCount"    : @"favourites_count",
+           @"favoritesCount"    : @"favorite_count",
            @"profileImageURL"   : @"user.profile_image_url"
            };
 }

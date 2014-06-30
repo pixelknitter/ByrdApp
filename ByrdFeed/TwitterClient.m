@@ -24,7 +24,7 @@
 #define POST_STATUS_UPDATE_URL @"1.1/statuses/update.json"
 #define POST_STATUS_RETWEET_URL @"1.1/statuses/retweet/%@.json"
 #define GET_STATUS_RETWEETS_URL @"1.1/statuses/retweets/%@.json"
-#define POST_STATUS_UNTWEET_URL @"1.1/statuses/destroy/{id}.json"
+#define POST_STATUS_UNTWEET_URL @"1.1/statuses/destroy/%@.json"
 
 #define POST_STATUS_FAVORITE_URL @"1.1/favorites/create.json"
 #define POST_STATUS_UNFAVORITE_URL @"1.1/favorites/destroy.json"
@@ -55,8 +55,6 @@ static NSString *TWITTER_CONSUMER_SECRET;
 @interface TwitterClient()
 
 @property (nonatomic, strong) PersistencyManager *persistencyManager;
-@property (nonatomic, strong) TwitterClient *client;
-//@property (nonatomic, strong) User *currentUser;
 
 @end
 
@@ -101,17 +99,29 @@ static NSString *TWITTER_CONSUMER_SECRET;
     TWITTER_CONSUMER_KEY = [temp objectForKey:@"TWITTER_CONSUMER_KEY"];
     TWITTER_CONSUMER_SECRET = [temp objectForKey:@"TWITTER_CONSUMER_SECRET"];
     
-    
-    
     /* now create the instance */
     _sharedInstance = [[TwitterClient alloc] initWithBaseURL:[NSURL URLWithString:TWITTER_BASE_URL] consumerKey:TWITTER_CONSUMER_KEY consumerSecret:TWITTER_CONSUMER_SECRET];
   });
+  
   return _sharedInstance;
 }
+
+#pragma mark - Persistency Manager
 
 - (NSArray*)getTweets
 {
   return [_persistencyManager getTweets];
+}
+
+- (NSArray*)getUsers
+{
+  return [_persistencyManager getUsers];
+}
+
+#pragma mark - OAuth
+
+- (BOOL)isLoggedIn {
+  return [[TwitterClient sharedInstance] getCurrentUser] && [TwitterClient sharedInstance].authorized;
 }
 
 - (void)login {
@@ -133,10 +143,6 @@ static NSString *TWITTER_CONSUMER_SECRET;
   } failure:^(NSError *error) {
     NSLog(@"Failure: %@", error);
   }];
-}
-
-- (BOOL)isLoggedIn {
-  return [[TwitterClient sharedInstance] getCurrentUser] && [TwitterClient sharedInstance].authorized;
 }
 
 - (BOOL)processAuthResponseURL:(NSURL *)url onSuccess:(void (^)(void))success{
@@ -164,6 +170,8 @@ static NSString *TWITTER_CONSUMER_SECRET;
   }
   return NO;
 }
+
+#pragma mark - REST APIs
 
 - (AFHTTPRequestOperation *)getWithEndpointType:(TwitterClientEndpointType)endpointType success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
 
@@ -209,6 +217,10 @@ static NSString *TWITTER_CONSUMER_SECRET;
   }
   else if (endpointType == TwitterClientEndpointUnfavorite) {
     endpointTypeString = POST_STATUS_UNFAVORITE_URL;
+  }
+  else if (endpointType == TwitterClientEndpointUnTweet) {
+    NSString *tweetId = parameters[@"id"];
+    endpointTypeString = [NSString stringWithFormat:POST_STATUS_UNTWEET_URL, tweetId ];
   }
   
   return [self POST:endpointTypeString parameters:parameters success:success failure:failure];

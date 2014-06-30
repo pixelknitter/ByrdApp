@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
 
-@interface TweetViewController : UIViewController
+@interface TweetViewController : UIViewController <UINavigationControllerDelegate>
 
 @property (nonatomic, strong)  Tweet *tweet;
 

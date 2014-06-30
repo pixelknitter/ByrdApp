@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 NinjaSudo Inc. All rights reserved.
 //
 
+#import "Crittercism.h"
+
 // Notification Constants
 static NSString *UserLoggedInNotification = @"UserLoggedInNotification";
 static NSString *UserSignOutNotification = @"UserSignOutNotification";

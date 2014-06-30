@@ -7,7 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MenuPanelViewController.h"
 
-@interface TimelineTableViewController : UITableViewController
+@protocol TimelineTableViewControllerDelegate <NSObject>
+
+@optional
+- (void)movePanelLeft;
+- (void)movePanelRight;
+
+@required
+- (void)movePanelToOriginalPosition;
 
 @end
+
+@interface TimelineTableViewController : UITableViewController <MenuPanelViewControllerDelegate>
+
+@property (nonatomic, assign) id<TimelineTableViewControllerDelegate> delegate;
+
+@end
+

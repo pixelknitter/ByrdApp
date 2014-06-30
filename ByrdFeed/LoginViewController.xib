@@ -6,8 +6,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
             <connections>
-                <outlet property="passwordTextField" destination="V1S-BU-XpB" id="V7H-zo-QUx"/>
-                <outlet property="usernameTextField" destination="cf6-WI-SIJ" id="ynl-cs-TGk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,66 +14,32 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Rz-5h-ohy">
-                    <rect key="frame" x="130" y="191" width="60" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Pi-zy-vLt">
+                    <rect key="frame" x="115" y="115" width="90" height="90"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="60" id="JPA-CF-7pS"/>
+                        <constraint firstAttribute="width" constant="90" id="1oG-ZD-Ekv"/>
+                        <constraint firstAttribute="height" constant="90" id="PXB-pN-FTi"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                    <state key="normal" title="Login">
-                        <color key="titleColor" red="0.95886901338012298" green="0.97652172469421816" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" image="twitter_circle.png">
+                        <color key="titleColor" red="0.2447634427" green="0.2184113382" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="onLoginButton:" destination="-1" eventType="touchUpInside" id="rnQ-IX-E78"/>
+                        <action selector="onLoginButton:" destination="-1" eventType="touchUpInside" id="pNO-pC-3RN"/>
                     </connections>
                 </button>
-                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V1S-BU-XpB">
-                    <rect key="frame" x="100" y="153" width="120" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="120" id="vY9-2u-Gm5"/>
-                        <constraint firstAttribute="height" constant="30" id="wzH-m1-p9g"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" keyboardType="twitter" returnKeyType="go" secureTextEntry="YES"/>
-                </textField>
-                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cf6-WI-SIJ">
-                    <rect key="frame" x="100" y="115" width="120" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="120" id="P1Y-sT-nio"/>
-                        <constraint firstAttribute="height" constant="30" id="Tso-kL-kZm"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" keyboardType="twitter" returnKeyType="next"/>
-                </textField>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bird_gray_48.png" translatesAutoresizingMaskIntoConstraints="NO" id="Eda-MD-5Ht">
-                    <rect key="frame" x="136" y="231" width="48" height="48"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="48" id="4B6-6V-0l7"/>
-                        <constraint firstAttribute="width" constant="48" id="I6Z-PN-Iye"/>
-                    </constraints>
-                </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.26206301482018823" green="0.67303063061024115" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Eda-MD-5Ht" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="136" id="IG5-To-4t4"/>
-                <constraint firstItem="cf6-WI-SIJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="115" id="RbG-7W-AG2"/>
-                <constraint firstItem="V1S-BU-XpB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="100" id="RnK-EO-n4J"/>
-                <constraint firstItem="cf6-WI-SIJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="100" id="SJy-Ra-NWh"/>
-                <constraint firstItem="7Rz-5h-ohy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="130" id="TtA-Np-ERu"/>
-                <constraint firstItem="Eda-MD-5Ht" firstAttribute="top" secondItem="7Rz-5h-ohy" secondAttribute="bottom" constant="10" id="r9n-or-UEq"/>
-                <constraint firstItem="7Rz-5h-ohy" firstAttribute="top" secondItem="V1S-BU-XpB" secondAttribute="bottom" constant="8" id="xd8-Rb-VWT"/>
-                <constraint firstItem="V1S-BU-XpB" firstAttribute="top" secondItem="cf6-WI-SIJ" secondAttribute="bottom" constant="8" id="xmh-jw-Vqc"/>
+                <constraint firstItem="6Pi-zy-vLt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="115" id="9LT-Sg-H1x"/>
+                <constraint firstItem="6Pi-zy-vLt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="115" id="9n6-iJ-q1X"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
     <resources>
-        <image name="bird_gray_48.png" width="44" height="35"/>
+        <image name="twitter_circle.png" width="128" height="128"/>
     </resources>
 </document>

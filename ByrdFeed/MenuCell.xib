@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="34" id="KGk-i7-Jjw" customClass="MenuCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NUz-3g-kWR" userLabel="Icon">
+                        <rect key="frame" x="2" y="2" width="28" height="28"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="28" id="WIL-H4-mda"/>
+                            <constraint firstAttribute="height" constant="28" id="cZp-IR-9AY"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MenuTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQn-9k-DIu" userLabel="MenuTitle">
+                        <rect key="frame" x="38" y="6" width="274" height="19"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                        <color key="textColor" red="0.90009341030000001" green="0.90009341030000001" blue="0.90009341030000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="NUz-3g-kWR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="6dw-SU-Y6g"/>
+                    <constraint firstAttribute="trailing" secondItem="EQn-9k-DIu" secondAttribute="trailing" constant="8" id="70D-ef-HPh"/>
+                    <constraint firstItem="EQn-9k-DIu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="9RX-QJ-3zN"/>
+                    <constraint firstItem="EQn-9k-DIu" firstAttribute="leading" secondItem="NUz-3g-kWR" secondAttribute="trailing" constant="8" id="PMt-eA-eWb"/>
+                    <constraint firstAttribute="bottom" secondItem="EQn-9k-DIu" secondAttribute="bottom" constant="6" id="jrW-hx-BZn"/>
+                    <constraint firstItem="NUz-3g-kWR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="2" id="lgQ-tM-4IO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="MenuIcon" destination="NUz-3g-kWR" id="u2U-wf-uNh"/>
+                <outlet property="MenuItemLabel" destination="H2p-sc-9uM" id="fru-1E-chF"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

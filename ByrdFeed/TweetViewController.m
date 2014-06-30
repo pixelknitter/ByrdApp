@@ -56,10 +56,12 @@
   
   if (_tweet.isFavorited) {
     [self.favoriteButton setImage:[UIImage imageNamed:@"favorite_on.png"] forState:UIControlStateSelected];
+    self.favoriteButton.selected = YES;
   }
   
   if (_tweet.isRetweeted) {
     [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on.png"] forState:UIControlStateSelected];
+    self.retweetButton.selected = YES;
   }
   
   self.usernameLabel.text = _tweet.screenName;
@@ -105,12 +107,24 @@
    @{
      @"id": _tweet.tweetID
      } success:^(AFHTTPRequestOperation *operation, id responseObject){
-       _tweet.isRetweeted = true;
+       // Togggle
+//       _tweet.isRetweeted = !_tweet.isRetweeted;
+       _tweet.isRetweeted = YES;
        _tweet.retweetCount++;
-       NSLog(@"Success");
-       self.retweetsCountLabel.text = [NSString stringWithFormat:@"%d", _tweet.retweetCount];
-       self.showStatus = true;
+//       if (_tweet.isRetweeted) {
+//         _tweet.retweetCount++;
+//         self.showStatus = YES;
+//       }
+//       else {
+//         _tweet.isRetweeted--;
+//         if (_tweet.retweetCount == 0){
+//           self.showStatus = YES;
+//         }
+//       }
+       
        /* update retweet icon */
+       self.retweetsCountLabel.text = [NSString stringWithFormat:@"%d", _tweet.retweetCount];
+       self.showStatus = YES;
      } failure:^(AFHTTPRequestOperation *operation, NSError *error){
        NSLog(@"Error tweeting: %@", error);
        
@@ -127,28 +141,29 @@
      @"id": _tweet.tweetID
      } success:^(AFHTTPRequestOperation *operation, id responseObject){
        _tweet.isFavorited = !_tweet.isFavorited;
-       if (_tweet.isFavorited){
+       if (_tweet.isFavorited) {
          _tweet.favoritesCount++;
-         self.showStatus = true;
-       }else{
+         self.showStatus = YES;
+       }
+       else {
          _tweet.favoritesCount--;
          if (_tweet.favoritesCount == 0){
-           self.showStatus = false;
+           self.showStatus = YES;
          }
        }
+       
+       /* update favorites icon */
        self.favoritesCountLabel.text = [NSString stringWithFormat:@"%d", _tweet.favoritesCount];
-       /* update retweet icon */
      } failure:^(AFHTTPRequestOperation *operation, NSError *error){
        NSLog(@"Error tweeting: %@", error);
      }];
-  
 }
-
 
 #pragma mark - private
 
 - (void) onComposeButton {
   ComposeTweetViewController *composeView = [[ComposeTweetViewController alloc] init];
+#warning TODO Refactor to not use properties
   composeView.replyTo = [User getFormattedUserName:_tweet.screenName];
   composeView.replyIdStr = self.tweet.tweetID;
   

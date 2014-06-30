@@ -21,7 +21,8 @@ typedef enum  {
   TwitterClientEndpointFavorite,
   TwitterClientEndpointUnfavorite,
   TwitterClientEndpointMentions,
-  TwitterClientEndpointMyTweets
+  TwitterClientEndpointMyTweets,
+  TwitterClientEndpointUnTweet
 } TwitterClientEndpointType;
 
 @interface TwitterClient : BDBOAuth1RequestOperationManager
@@ -35,5 +36,8 @@ typedef enum  {
 - (void)login;
 - (BOOL)isLoggedIn;
 - (User *)getCurrentUser;
+
+// Get Users
+// Get Tweets
 
 @end

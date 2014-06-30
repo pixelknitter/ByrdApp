@@ -8,10 +8,10 @@
 
 #import "PersistencyManager.h"
 
-@interface PersistencyManager  ()
+@interface PersistencyManager()
 
 @property (nonatomic, strong) NSMutableArray *tweets;
-//@property (nonatomic, strong) NSMutableArray *users; // for multiple users
+@property (nonatomic, strong) NSMutableArray *users; // for multiple users
 @property (nonatomic, strong) User *currentUser;
 
 @end
@@ -22,7 +22,7 @@
 {
   self = [super init];
   if (self) {
-    // a dummy list of albums
+    // a dummy list of tweets
     _tweets = [NSMutableArray arrayWithArray:
                @[[[Tweet alloc] init] // TODO add actual init
                  ]
@@ -37,13 +37,11 @@
   return tweets;
 }
 
-- (void)addTweet:(Tweet*)album atIndex:(int)index {
-  
+- (void)addTweet:(Tweet*)tweet atIndex:(int)index {
   
 }
 
 - (void)deleteTweetAtIndex:(int)index {
-  
   
 }
 

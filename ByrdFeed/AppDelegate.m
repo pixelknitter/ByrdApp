@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 NinjaSudo Inc. All rights reserved.
 //
 
+#define CRITTERCISM_APP_ID @"53aa5adf07229a27ad000002" // Add to plist
+
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "TimelineTableViewController.h"
@@ -17,20 +19,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [Crittercism enableWithAppID:@"53aa5adf07229a27ad000002"];
+//  [Crittercism enableWithAppID:CRITTERCISM_APP_ID];
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   
-  /* check if we have a current user, if not login */
-  
-  if (![[TwitterClient sharedInstance] isLoggedIn]){
-    [[TwitterClient sharedInstance] login];
-  }
-  else {
-    [self showTimeline];
-  }
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline) name:UserLoggedInNotification object:nil];
+  self.viewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+  self.window.rootViewController = self.viewController;
   
   self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
@@ -41,6 +35,7 @@
 {
   // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
   // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+  
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -69,34 +64,12 @@
     /* get user */
     [[TwitterClient sharedInstance] getWithEndpointType:TwitterClientEndpointUser success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
-      [[NSNotificationCenter defaultCenter] postNotificationName:UserLoggedInNotification object:nil];
-      NSLog(@"Response: %@", responseObject);
       [[User initWithDictionary:responseObject] setAsCurrentUser];
-      
-      
       
     } failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
       NSLog(@"Failure: %@", error);
     }];
   }];
-}
-
-- (void) showTimeline {
-  NSLog(@"Show Timeline");
-  TimelineTableViewController *tvc = [[TimelineTableViewController alloc] init];
-
-  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tvc];
-  
-  self.window.backgroundColor = tvc.view.backgroundColor;
-
-  /* add the tweet colors to things */
-  UIColor * lightBlueColor = [UIColor colorWithRed:90/255.0f green:192/255.0f blue:251/255.0f alpha:1.0f];
-  [nav.navigationBar setBarTintColor:lightBlueColor];
-  [nav.navigationBar setTintColor:[UIColor blackColor]];
-  [nav.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
-  [nav.navigationBar setTranslucent:YES];
-  
-  self.window.rootViewController = nav;
 }
 
 @end

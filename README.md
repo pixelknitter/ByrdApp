@@ -5,7 +5,9 @@ A twitter client providing you a way to manage, tweet, and feeeed.
 
 Time spent: 14 hours spent in total
 
-## User Stories
+# User Stories
+
+## Basic Twitter
 
 ### Required:
 * [x] User can sign in using OAuth login flow
@@ -23,6 +25,33 @@ Time spent: 14 hours spent in total
 * [x] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
 * [x] Replies should be prefixed with the username and the reply_id should be set when posting the tweet,
 * [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
+
+## Twitter Upgrade
+
+### Required
+
+#### Hamburger Menu
+* [ ] Dragging anywhere in the view should reveal the menu.
+* [ ] The menu should include links to your profile, the home timeline, and the mentions view.
+* [ ] The menu can look similar to the LinkedIn menu below or feel free to take liberty with the UI.
+#### Profile page
+* [ ] Contains the user header view
+* [ ] Contains a section with the users basic stats: # tweets, # following, # followers
+#### Home Timeline
+* [ ] Tapping on a user image should bring up that user's profile page
+
+### Optional
+
+#### Profile page
+* [ ] Implement the paging view for the user description.
+* [ ] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect.
+* [ ] Pulling down the profile page should blur and resize the header image.
+
+#### Account switching (optional)
+* [ ] Long press on tab bar to bring up Account view with animation
+* [ ] Tap account to switch to
+* [ ] Include a plus button to Add an Account
+* [ ] Swipe to delete an account
 
 ## Installation
 

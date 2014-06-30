@@ -8,18 +8,19 @@
 
 #import "Mantle.h"
 
-@interface User : MTLModel <MTLJSONSerializing>
+@interface User : MTLModel <MTLJSONSerializing, NSCoding>
 
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *description;
 @property (strong, nonatomic) NSString *realName;
 @property (strong, nonatomic) NSString *location;
-//@property (strong, nonatomic) NSString *profileBackgroundColor;
-//@property (strong, nonatomic) NSString *profileBackgroundImageURL;
+@property (strong, nonatomic) NSString *profileBackgroundColor;
+@property (strong, nonatomic) NSURL *pbackImageURL;
 @property (strong, nonatomic) NSURL *profileImageURL;
-@property (nonatomic, assign) NSInteger userID;
-@property (nonatomic, assign) NSInteger followersCount;
-@property (nonatomic, assign) NSInteger tweetCount;
+@property (nonatomic) NSInteger userID;
+@property (nonatomic) NSInteger followerCount;
+@property (nonatomic) NSInteger followingCount;
+@property (nonatomic) NSInteger tweetCount;
 
 + (User *)currentUser;
 + (NSString *)getFormattedUserName:(NSString *)userName;

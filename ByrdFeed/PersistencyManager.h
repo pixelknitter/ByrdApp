@@ -13,7 +13,11 @@
 @interface PersistencyManager : NSObject
 
 - (NSArray*)getTweets;
-- (void)addTweet:(Tweet*)album atIndex:(int)index;
+- (void)addTweet:(Tweet*)tweet atIndex:(int)index;
 - (void)deleteTweetAtIndex:(int)index;
+
+- (NSArray*)getUsers;
+- (void)addUser:(User*)user atIndex:(int)index;
+- (void)deleteUserAtIndex:(int)index;
 
 @end
