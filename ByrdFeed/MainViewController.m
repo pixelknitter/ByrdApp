@@ -22,7 +22,7 @@
 #define MENU_PANEL_TAG 2
 
 #define SLIDE_TIMING .25
-#define PANEL_WIDTH 50
+#define PANEL_WIDTH 46
 
 @interface MainViewController () <TimelineViewDelegate, MenuPanelDelegate, UIGestureRecognizerDelegate>
 

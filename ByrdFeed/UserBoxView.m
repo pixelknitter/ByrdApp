@@ -39,9 +39,6 @@
 }
 
 - (void)reloadData {
-  _profileImageView = nil;
-  
-#warning TODO convert saved BG color to UIColor
   [Utils loadImageUrl:_user.profileImageURL inImageView:self.profileImageView withAnimation:YES];
   _nameLabel.text = _user.name;
   _screenNameLabel.text = [User getFormattedUserName:_user.screenName];

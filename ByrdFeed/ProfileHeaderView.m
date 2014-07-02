@@ -39,9 +39,6 @@
 }
 
 - (void)reloadData {
-//  self.bannerImageView = nil;
-//  self.profileImageView = nil;
-  
   // populate the header views
   if (_user.bannerImageURL) {
     [Utils loadImageUrl:_user.bannerImageURL inImageView:self.bannerImageView withAnimation:YES success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {

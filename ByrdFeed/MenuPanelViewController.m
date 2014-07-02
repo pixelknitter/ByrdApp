@@ -80,9 +80,8 @@
 {
   MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell" forIndexPath:indexPath];
   
+#warning TODO add icon image to cell view
   cell.menuTitleLabel.text = [self.menuItems objectAtIndex:indexPath.row];
-
-#warning TODO find a way to remove  the white borders for the unused cells
   
   return cell;
 }
