@@ -54,6 +54,8 @@
   self.profileTableView.delegate = self;
   self.profileTableView.dataSource = self;
   
+  
+  
   UINib *tweetCellNib = [UINib nibWithNibName:@"TweetCell" bundle:nil];
   [self.profileTableView registerNib:tweetCellNib forCellReuseIdentifier:@"TweetCell"];
   self.stubTweetCell = [self.profileTableView dequeueReusableCellWithIdentifier:@"TweetCell"];
@@ -63,16 +65,14 @@
   // Set Inset for divider
   [self.profileTableView setSeparatorInset:UIEdgeInsetsZero];
   
+  // fetch Tweets
+  [self fetchTweets:TwitterClientEndpointMyTweets];
+  
   // init the header views
   self.profileHeaderView = [[ProfileHeaderView alloc] init];
-  self.profileHeaderView.clipsToBounds = NO;
-   self.profileTableView.tableHeaderView = self.profileHeaderView;
-  
-  
-  self.profileHeaderView.user = _user;
-  
-  // fetch the tweets
-  [self fetchTweets:TwitterClientEndpointMyTweets];
+  self.profileHeaderView.clipsToBounds = YES;
+  self.profileTableView.tableHeaderView = self.profileHeaderView;
+  self.profileHeaderView.user = self.user;
 }
 
 - (void)didReceiveMemoryWarning

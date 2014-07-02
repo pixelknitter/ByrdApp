@@ -66,29 +66,6 @@
   return 1;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  UIView *headerView = [[UIView alloc] init];
-  headerView.backgroundColor = [UIColor whiteColor];
-  
-//  [UIView animateWithDuration:1.0f
-//                        delay:0.9f
-//       usingSpringWithDamping:0.9f
-//        initialSpringVelocity:10.0f
-//                      options:UIViewAnimationOptionBeginFromCurrentState |
-//                              UIViewAnimationCurveEaseInOut
-//                   animations:^{
-//    headerView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, 50.0f);
-//  } completion:nil];
-  
-  headerView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, 50.0f);
-  
-  return headerView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  return 75.0f;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   // Return the number of rows in the section.

@@ -28,14 +28,7 @@
     [self.profileImageView addGestureRecognizer:tapGestureRecognizer];
     
     // Initialization code
-    UINib *nib = [UINib nibWithNibName:@"UserBoxView" bundle:nil];
-    NSArray *objects = [nib instantiateWithOwner:self options:nil];
-    
-    _profileImageView.layer.cornerRadius = 5;
-    
-    UIView *subview = objects[0];
-    self.frame = subview.frame;
-    [self addSubview:objects[0]];
+    self = [[[NSBundle mainBundle] loadNibNamed:@"UserBoxView" owner:self options:nil] lastObject];
   }
   return self;
 }

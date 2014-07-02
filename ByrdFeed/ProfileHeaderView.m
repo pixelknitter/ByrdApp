@@ -27,14 +27,8 @@
     [self.profileImageView addGestureRecognizer:tapGestureRecognizer];
     
     // Initialization code
+    self = [[[NSBundle mainBundle] loadNibNamed:@"ProfileHeaderView" owner:self options:nil] lastObject];
     
-//    ProfileHeaderView *view = [[[NSBundle mainBundle] loadNibNamed:@"ProfileHeaderView" owner:nil options:nil] lastObject];
-    UINib *nib = [UINib nibWithNibName:@"ProfileHeaderView" bundle:nil];
-    NSArray *objects = [nib instantiateWithOwner:self options:nil];
-    
-    UIView *subview = objects[0];
-    self.frame = subview.frame;
-    [self addSubview:objects[0]];
   }
   return self;
 }
@@ -45,8 +39,8 @@
 }
 
 - (void)reloadData {
-  self.bannerImageView = nil;
-  self.profileImageView = nil;
+//  self.bannerImageView = nil;
+//  self.profileImageView = nil;
   
   // populate the header views
   if (_user.bannerImageURL) {
@@ -62,8 +56,8 @@
 
   [Utils loadImageUrl:_user.profileImageURL inImageView:self.profileImageView withAnimation:YES];
   self.profileImageView.layer.cornerRadius = 5;
+  
   self.nameLabel.text = _user.name;
-  NSLog(@"name: %@", self.screenNameLabel.text);
   self.screenNameLabel.text = [User getFormattedUserName:_user.screenName];
 }
 
