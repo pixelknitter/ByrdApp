@@ -64,54 +64,10 @@
   [self.profileTableView setSeparatorInset:UIEdgeInsetsZero];
   
   // init the header views
-  self.profileHeaderView = [[ProfileHeaderView alloc] init];
-  self.profileHeaderView.clipsToBounds = YES;
+//  self.profileHeaderView = [[ProfileHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+  self.profileHeaderView.clipsToBounds = NO;
   self.profileHeaderView.user = self.user;
-//  
-//  CGRect frame = self.profileTableView.frame;
-//  frame.size.height = 150;
-//  self.profileHeaderView = [[UIView alloc] initWithFrame:frame];
-//  self.profileHeaderView.clipsToBounds = YES;
-//  self.bannerImageView = [[UIImageView alloc] initWithFrame:frame];
-//  self.bannerImageView.contentMode = UIViewContentModeScaleAspectFill;
-//  [self.profileHeaderView addSubview:self.bannerImageView];
-//  UIView *profileImageContainer = [[UIView alloc] initWithFrame:CGRectMake(128, 20, 64, 64)];
-//  profileImageContainer.backgroundColor = [UIColor whiteColor];
-//  profileImageContainer.layer.cornerRadius = 5;
-//  [self.profileHeaderView addSubview:profileImageContainer];
-//  UIImageView *profileImage = [[UIImageView alloc] initWithFrame:CGRectMake(4, 4, 56, 56)];
-//  profileImage.layer.cornerRadius = 3;
-//  profileImage.clipsToBounds = YES;
-//  [profileImageContainer addSubview:profileImage];
-//  UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, 320, 20)];
-//  userNameLabel.textColor = [UIColor whiteColor];
-//  userNameLabel.font = [UIFont boldSystemFontOfSize:16];
-//  userNameLabel.textAlignment = NSTextAlignmentCenter;
-//  [self.profileHeaderView addSubview:userNameLabel];
-//  UILabel *userScreenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 108, 320, 20)];
-//  userScreenNameLabel.textColor = [UIColor whiteColor];
-//  userScreenNameLabel.font = [UIFont systemFontOfSize:13];
-//  userScreenNameLabel.textAlignment = NSTextAlignmentCenter;
-//  [self.profileHeaderView addSubview:userScreenNameLabel];
-  
-//  // populate the header views
-//  if (self.user.bannerImageURL) {
-//    UIImageView *bannerImageView = self.bannerImageView;
-//    [Utils loadImageUrl:self.user.bannerImageURL inImageView:bannerImageView withAnimation:YES success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//      self.bannerImage = image;
-//      self.bannerImageView.image = image;
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-//      NSLog(@"%@", error);
-//    }];
-//  }
-//  else {
-//    self.bannerImageView.backgroundColor = [UIColor darkGrayColor];
-//  }
-//
-//#warning TODO convert saved BG color to UIColor  
-//  [Utils loadImageUrl:self.user.profileImageURL inImageView:profileImage withAnimation:YES];
-//  userNameLabel.text = self.user.name;
-//  userScreenNameLabel.text = [NSString stringWithFormat:@"@%@", self.user.screenName];
+
   self.profileTableView.tableHeaderView = self.profileHeaderView;
   
   // fetch the tweets
@@ -192,7 +148,7 @@
 - (void)fetchTweets:(TwitterClientEndpointType)type {
     NSLog(@"Fetching Tweets...");
       [[TwitterClient sharedInstance] getWithEndpointType:type
-                                               parameters:nil
+                                               parameters:@{@"screen_name" : self.user.screenName}
                                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
       //    NSLog(@"%@", responseObject);
       

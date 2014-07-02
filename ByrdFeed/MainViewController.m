@@ -148,8 +148,10 @@
   // remove left and right views, and reset variables, if needed
   if (_menuPanelViewController != nil)
   {
+    [self.menuPanelViewController willMoveToParentViewController:nil];  // 1
     [self.menuPanelViewController.view removeFromSuperview];
     self.menuPanelViewController = nil;
+    [self.menuPanelViewController removeFromParentViewController];      // 3
     
 #warning Check if on left or right
     self.showingLeftPanel = NO;
@@ -158,7 +160,7 @@
   
   // TODO find a way to deactive the navbar buttons
   
-  [_navigationController.view removeGestureRecognizer:self.tapCloseGesture];
+  [self.navigationController.view removeGestureRecognizer:self.tapCloseGesture];
   
   // remove view shadows
   [self showCenterViewWithShadow:NO withOffset:0];
@@ -327,11 +329,14 @@
   
   [UIView animateWithDuration:SLIDE_TIMING delay:0 options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^{
-                     _navigationController.view.frame = CGRectMake(-self.view.frame.size.width + PANEL_WIDTH, 0, self.view.frame.size.width, self.view.frame.size.height);
+                     self.navigationController.view.frame = CGRectMake(-self.view.frame.size.width + PANEL_WIDTH, 0, self.view.frame.size.width, self.view.frame.size.height);
                    }
                    completion:^(BOOL finished) {
                      if (finished) {
-#warning identify right
+//                       [self addChildViewController:content];                 // 1
+//                       content.view.frame = [self frameForContentController]; // 2
+//                       [self.view addSubview:self.currentClientView];
+                       [self.navigationController didMoveToParentViewController:self];
                      }
                    }];
 }
@@ -343,11 +348,11 @@
   
   [UIView animateWithDuration:SLIDE_TIMING delay:0 options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^{
-                     _navigationController.view.frame = CGRectMake(self.view.frame.size.width - PANEL_WIDTH, 0, self.view.frame.size.width, self.view.frame.size.height);
+                     self.navigationController.view.frame = CGRectMake(self.view.frame.size.width - PANEL_WIDTH, 0, self.view.frame.size.width, self.view.frame.size.height);
                    }
                    completion:^(BOOL finished) {
                      if (finished) {
-#warning identify left
+                       [self.navigationController didMoveToParentViewController:self];
                      }
                    }];
 }
@@ -357,7 +362,7 @@
   [self viewWillLayoutSubviews];
   [UIView animateWithDuration:SLIDE_TIMING delay:0 options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^{
-                     _navigationController.view.frame = self.view.frame;
+                     self.navigationController.view.frame = self.view.frame;
                    }
                    completion:^(BOOL finished) {
                      if (finished) {

@@ -58,7 +58,7 @@ Time spent: 14 hours spent in total
 1. Add TwitterAPI.plist
 2. Add **Consumer Key** with key "TWITTER_CONSUMER_KEY"
 3. Add **Consumer Secret** with key "TWITTER_CONSUMER_SECRET"
-4. Install pods from Podlist
+4. Install pods from Podlist: pod install
 5. Launch
 
 Walkthrough of all user stories:

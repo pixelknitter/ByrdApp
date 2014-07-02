@@ -187,8 +187,8 @@ static NSString *TWITTER_CONSUMER_SECRET;
       
       if(!parameters) {
         parameters = [[NSMutableDictionary alloc] init];
+        [parameters addEntriesFromDictionary:@{ @"screen_name": [User currentUser].screenName }];
       }
-      [parameters addEntriesFromDictionary:@{ @"screen_name": [User currentUser].screenName }];
       break;
     }
     default:
