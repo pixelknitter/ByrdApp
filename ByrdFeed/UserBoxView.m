@@ -42,14 +42,12 @@
 
 - (void)setUser:(User *)user {
   _user = user;
-  NSLog(@"Setting User");
   [self reloadData];
 }
 
 - (void)reloadData {
   _profileImageView = nil;
   
-  NSLog(@"Loading data");
 #warning TODO convert saved BG color to UIColor
   [Utils loadImageUrl:_user.profileImageURL inImageView:self.profileImageView withAnimation:YES];
   _nameLabel.text = _user.name;

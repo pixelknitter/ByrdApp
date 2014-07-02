@@ -64,11 +64,12 @@
   [self.profileTableView setSeparatorInset:UIEdgeInsetsZero];
   
   // init the header views
-//  self.profileHeaderView = [[ProfileHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+  self.profileHeaderView = [[ProfileHeaderView alloc] init];
   self.profileHeaderView.clipsToBounds = NO;
-  self.profileHeaderView.user = self.user;
-
-  self.profileTableView.tableHeaderView = self.profileHeaderView;
+   self.profileTableView.tableHeaderView = self.profileHeaderView;
+  
+  
+  self.profileHeaderView.user = _user;
   
   // fetch the tweets
   [self fetchTweets:TwitterClientEndpointMyTweets];
@@ -139,14 +140,14 @@
 #pragma mark - TweetCell & ProfileHeaderView Delegate
 
 - (void)onTapProfileImage:(User *)user {
-  ProfileViewController *vc = [[ProfileViewController alloc] init];
-  vc.user = user;
-  [self.navigationController pushViewController:vc animated:YES];
+//  ProfileViewController *vc = [[ProfileViewController alloc] init];
+//  vc.user = user;
+//  [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - data loading functions
 - (void)fetchTweets:(TwitterClientEndpointType)type {
-    NSLog(@"Fetching Tweets...");
+    NSLog(@"Fetching Tweets for %@", self.user.screenName);
       [[TwitterClient sharedInstance] getWithEndpointType:type
                                                parameters:@{@"screen_name" : self.user.screenName}
                                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {

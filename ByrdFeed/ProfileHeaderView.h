@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 
+@class ProfileHeaderView;
+
 @protocol ProfileHeaderViewDelegate <NSObject>
 
 @required

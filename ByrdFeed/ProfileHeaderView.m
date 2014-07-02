@@ -27,10 +27,10 @@
     [self.profileImageView addGestureRecognizer:tapGestureRecognizer];
     
     // Initialization code
+    
+//    ProfileHeaderView *view = [[[NSBundle mainBundle] loadNibNamed:@"ProfileHeaderView" owner:nil options:nil] lastObject];
     UINib *nib = [UINib nibWithNibName:@"ProfileHeaderView" bundle:nil];
     NSArray *objects = [nib instantiateWithOwner:self options:nil];
-    
-    self.profileImageView.layer.cornerRadius = 5;
     
     UIView *subview = objects[0];
     self.frame = subview.frame;
@@ -41,7 +41,6 @@
 
 - (void)setUser:(User *)user {
   _user = user;
-  NSLog(@"Setting User");
   [self reloadData];
 }
 
@@ -58,12 +57,13 @@
     }];
   }
   else {
-    self.bannerImageView.backgroundColor = [UIColor darkGrayColor];
+    self.bannerImageView.backgroundColor = _user.backgroundColor;
   }
-  NSLog(@"Loading data");
-#warning TODO convert saved BG color to UIColor
+
   [Utils loadImageUrl:_user.profileImageURL inImageView:self.profileImageView withAnimation:YES];
+  self.profileImageView.layer.cornerRadius = 5;
   self.nameLabel.text = _user.name;
+  NSLog(@"name: %@", self.screenNameLabel.text);
   self.screenNameLabel.text = [User getFormattedUserName:_user.screenName];
 }
 

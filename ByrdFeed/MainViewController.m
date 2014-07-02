@@ -97,31 +97,35 @@
 {
   NSLog(@"Show Timeline");
   // Setup timeline view
-  self.timelineViewController = [[TimelineTableViewController alloc] initWithNibName:nil bundle:nil];
-  self.timelineViewController.view.tag = CENTER_TAG;
-  self.timelineViewController.delegate = self;
+  if (self.timelineViewController == nil) {
+    self.timelineViewController = [[TimelineTableViewController alloc] init];
+    self.timelineViewController.view.tag = CENTER_TAG;
+    self.timelineViewController.delegate = self;
+  }
+  
+  if (self.navigationController == nil) {
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:_timelineViewController];
+    self.navigationController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    
+    /* add the tweet colors to things */
+    UIColor * lightBlueColor = [UIColor colorWithRed:90/255.0f green:192/255.0f blue:251/255.0f alpha:1.0f];
+    [self.navigationController.navigationBar setBarTintColor:lightBlueColor];
+    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    [self.navigationController.navigationBar setTranslucent:YES];
+    [self.view addSubview:_navigationController.view];
+    [self addChildViewController:_navigationController];
+    
+    // Set Menu Button
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu-button"] style:UIBarButtonItemStyleBordered target:self action:@selector(menuButtonPressed:)];
+    
+    menuButton.tintColor = [UIColor whiteColor];
+    
+    self.timelineViewController.navigationItem.leftBarButtonItem = menuButton;
+  }
+ 
+  [self.navigationController didMoveToParentViewController:self];
   self.timelineViewController.type = TwitterClientEndpointTimeline;
-  
-  self.navigationController = [[UINavigationController alloc] initWithRootViewController:_timelineViewController];
-  self.navigationController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-  
-  /* add the tweet colors to things */
-  UIColor * lightBlueColor = [UIColor colorWithRed:90/255.0f green:192/255.0f blue:251/255.0f alpha:1.0f];
-  [self.navigationController.navigationBar setBarTintColor:lightBlueColor];
-  [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
-  [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
-  [self.navigationController.navigationBar setTranslucent:YES];
-  [self.view addSubview:_navigationController.view];
-  [self addChildViewController:_navigationController];
-  
-  // Set Menu Button
-  UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu-button"] style:UIBarButtonItemStyleBordered target:self action:@selector(menuButtonPressed:)];
-  
-  menuButton.tintColor = [UIColor whiteColor];
-  
-  self.timelineViewController.navigationItem.leftBarButtonItem = menuButton;
-  
-  [_navigationController didMoveToParentViewController:self];
   
   [self setupGestures];
 }
