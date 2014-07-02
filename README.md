@@ -4,8 +4,8 @@ ByrdApp
 A twitter client providing you a way to manage, tweet, and feeeed.
 
 (all times are approximate)
-Time spent: 14 hours spent in total
-Time spent for Redux: 16 hours spent in total
+* Time spent: 14 hours spent in total
+* Time spent for Redux: 16 hours spent in total
 
 # User Stories
 
