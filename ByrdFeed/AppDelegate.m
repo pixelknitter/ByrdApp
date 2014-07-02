@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//  [Crittercism enableWithAppID:CRITTERCISM_APP_ID];
+  [Crittercism enableWithAppID:CRITTERCISM_APP_ID];
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   

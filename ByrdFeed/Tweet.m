@@ -20,7 +20,7 @@
            @"isRetweeted"       : @"retweeted",
            @"isFavorited"       : @"favorited",
            @"retweetCount"      : @"retweet_count",
-           @"favoritesCount"    : @"favorite_count",
+           @"favoritesCount"    : @"favorite_count"
            };
 }
 

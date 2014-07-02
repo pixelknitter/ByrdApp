@@ -67,6 +67,8 @@
     self.tweetTextField.text = @"";
   }
   
+#warning TODO refactor with new custom view
+  
   // Get Current User
   User *user = [[TwitterClient sharedInstance] getCurrentUser];
   
@@ -103,9 +105,19 @@
                                                          @"in_reply_to_status_id": _replyIdStr ? _replyIdStr : @""
                                                          }
                                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                                 Tweet *newTweet = [[Tweet alloc] initWithDictionary:responseObject error:nil];
-                                                 /* notify observers */
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:NewTweetCreatedNotification object:self userInfo:[NSDictionary dictionaryWithObject:newTweet forKey:@"tweet"]];
+                                                 NSLog(@"%@", responseObject);
+                                                 NSError *error = nil;
+                                                 Tweet *newTweet = nil;
+                                                 @try {
+                                                   newTweet = [[Tweet alloc] initWithDictionary:responseObject error:&error];
+                                                 }
+                                                 @catch (NSException *error) {
+                                                   [Crittercism logHandledException:error];
+                                                 }
+                                                 
+                                                 if (newTweet) {
+                                                   [[NSNotificationCenter defaultCenter] postNotificationName:NewTweetCreatedNotification object:self userInfo:[NSDictionary dictionaryWithObject:newTweet forKey:@"tweet"]];
+                                                 }
                                                  [UIView animateWithDuration:0.75 animations:^{
                                                    [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
                                                    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:NO];
