@@ -15,7 +15,7 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) NSString *profileBackgroundColor;
-@property (strong, nonatomic) NSURL *pbackImageURL;
+@property (strong, nonatomic) NSURL *bannerImageURL;
 @property (strong, nonatomic) NSURL *profileImageURL;
 @property (nonatomic) NSInteger userID;
 @property (nonatomic) NSInteger followerCount;

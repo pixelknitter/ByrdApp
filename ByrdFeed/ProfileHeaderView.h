@@ -12,12 +12,13 @@
 @protocol ProfileHeaderViewDelegate <NSObject>
 
 @required
-- (void)didTapProfileImage;
+- (void)onTapProfileImage:(User *)user;
 
 @end
 
 @interface ProfileHeaderView : UIView
 
+@property (nonatomic, weak) id <ProfileHeaderViewDelegate> delegate;
 @property (strong, nonatomic) User *user;
 
 @end

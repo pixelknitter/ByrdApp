@@ -7,25 +7,28 @@
 //
 
 #import "ProfileViewController.h"
+#import "ProfileHeaderView.h"
 #import "Constants.h"
 #import "Utils.h"
 #import "Tweet.h"
 #import "TweetCell.h"
-//#import "UserStatsCell.h"
+#import "UserStatsCell.h"
 #import "TwitterClient.h"
 #import "TweetViewController.h"
 #import <MBProgressHud.h>
 #import <TSMessage.h>
 
-@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate>
+@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate, ProfileHeaderViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *profileTableView;
-
-@property (strong, nonatomic) TweetCell *stubCell;
-//@property (strong, nonatomic) UserStatsCell *prototypeStatsCell;
 @property (strong, nonatomic) NSArray *tweets;
 
-@property (strong, nonatomic) UIView *profileHeaderView;
+@property (weak, nonatomic) IBOutlet UITableView *profileTableView;
+@property (strong, nonatomic) TweetCell *stubTweetCell;
+@property (strong, nonatomic) UserStatsCell *stubStatsCell;
+
+@property (strong, nonatomic) ProfileHeaderView *profileHeaderView;
+@property (nonatomic, strong) UIImageView *bannerImageView;
+@property (nonatomic, strong) UIImage *bannerImage;
 
 @end
 
@@ -53,41 +56,66 @@
   
   UINib *tweetCellNib = [UINib nibWithNibName:@"TweetCell" bundle:nil];
   [self.profileTableView registerNib:tweetCellNib forCellReuseIdentifier:@"TweetCell"];
-  self.stubCell = [self.profileTableView dequeueReusableCellWithIdentifier:@"TweetCell"];
-//  UINib *userStatsCellNib = [UINib nibWithNibName:@"UserStatsCell" bundle:nil];
-//  [self.profileTableView registerNib:userStatsCellNib forCellReuseIdentifier:@"UserStatsCell"];
-//  self.prototypeStatsCell = [self.profileTableView dequeueReusableCellWithIdentifier:@"UserStatsCell"];
-  
+  self.stubTweetCell = [self.profileTableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+  UINib *userStatsCellNib = [UINib nibWithNibName:@"UserStatsCell" bundle:nil];
+  [self.profileTableView registerNib:userStatsCellNib forCellReuseIdentifier:@"UserStatsCell"];
+  self.stubStatsCell = [self.profileTableView dequeueReusableCellWithIdentifier:@"UserStatsCell"];
+  // Set Inset for divider
+  [self.profileTableView setSeparatorInset:UIEdgeInsetsZero];
   
   // init the header views
+  self.profileHeaderView = [[ProfileHeaderView alloc] init];
+  self.profileHeaderView.clipsToBounds = YES;
+  self.profileHeaderView.user = self.user;
+//  
+//  CGRect frame = self.profileTableView.frame;
+//  frame.size.height = 150;
+//  self.profileHeaderView = [[UIView alloc] initWithFrame:frame];
+//  self.profileHeaderView.clipsToBounds = YES;
+//  self.bannerImageView = [[UIImageView alloc] initWithFrame:frame];
+//  self.bannerImageView.contentMode = UIViewContentModeScaleAspectFill;
+//  [self.profileHeaderView addSubview:self.bannerImageView];
+//  UIView *profileImageContainer = [[UIView alloc] initWithFrame:CGRectMake(128, 20, 64, 64)];
+//  profileImageContainer.backgroundColor = [UIColor whiteColor];
+//  profileImageContainer.layer.cornerRadius = 5;
+//  [self.profileHeaderView addSubview:profileImageContainer];
+//  UIImageView *profileImage = [[UIImageView alloc] initWithFrame:CGRectMake(4, 4, 56, 56)];
+//  profileImage.layer.cornerRadius = 3;
+//  profileImage.clipsToBounds = YES;
+//  [profileImageContainer addSubview:profileImage];
+//  UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, 320, 20)];
+//  userNameLabel.textColor = [UIColor whiteColor];
+//  userNameLabel.font = [UIFont boldSystemFontOfSize:16];
+//  userNameLabel.textAlignment = NSTextAlignmentCenter;
+//  [self.profileHeaderView addSubview:userNameLabel];
+//  UILabel *userScreenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 108, 320, 20)];
+//  userScreenNameLabel.textColor = [UIColor whiteColor];
+//  userScreenNameLabel.font = [UIFont systemFontOfSize:13];
+//  userScreenNameLabel.textAlignment = NSTextAlignmentCenter;
+//  [self.profileHeaderView addSubview:userScreenNameLabel];
   
-  
-  // populate the header views
-//  UIImageView *bannerImageView = self.bannerImageView;
-//  [bannerImageView setImageWithURLRequest:[NSURLRequest requestWithURL:self.user.profileBannerUrl] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//    self.bannerImage = image;
-//    self.bannerImageView.image = image;
-//  } failure:nil];
-//  [profileImage setImageWithURL:self.user.profileImageUrl];
+//  // populate the header views
+//  if (self.user.bannerImageURL) {
+//    UIImageView *bannerImageView = self.bannerImageView;
+//    [Utils loadImageUrl:self.user.bannerImageURL inImageView:bannerImageView withAnimation:YES success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+//      self.bannerImage = image;
+//      self.bannerImageView.image = image;
+//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+//      NSLog(@"%@", error);
+//    }];
+//  }
+//  else {
+//    self.bannerImageView.backgroundColor = [UIColor darkGrayColor];
+//  }
+//
+//#warning TODO convert saved BG color to UIColor  
+//  [Utils loadImageUrl:self.user.profileImageURL inImageView:profileImage withAnimation:YES];
 //  userNameLabel.text = self.user.name;
 //  userScreenNameLabel.text = [NSString stringWithFormat:@"@%@", self.user.screenName];
-//  self.tableView.tableHeaderView = self.headerView;
-  
+  self.profileTableView.tableHeaderView = self.profileHeaderView;
   
   // fetch the tweets
   [self fetchTweets:TwitterClientEndpointMyTweets];
-  
-  // Background Color
-  ////  self.profileHeaderView.backgroundColor = _user.profileBackgroundColor;
-  //  [Utils loadImageUrl:_user.profileImageURL inImageView:self.profileImageView withAnimation:YES];
-  //  if(_user.pbackImageURL) {
-  //    [Utils loadImageUrl:_user.pbackImageURL inImageView:self.profileHeaderBackgroundImageView withAnimation:YES];
-  //  }
-  //
-  //  // Set Stats
-  //  self.followersButton.titleLabel.text = [NSString stringWithFormat:@"%d/nFOLLOWERS", _user.followerCount];
-  //  self.followingButton.titleLabel.text = [NSString stringWithFormat:@"%d/nFOLLOWING", _user.followerCount];
-  //  self.tweetsButton.titleLabel.text = [NSString stringWithFormat:@"%d/nTWEETS", _user.tweetCount];
 }
 
 - (void)didReceiveMemoryWarning
@@ -107,10 +135,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   // Return the number of rows in the section.
-//  if (section == 1) {
-//    return self.tweets.count;
-//  }
-  return self.tweets.count;
+  return self.tweets.count + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -119,42 +144,47 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   CGSize size;
-//  if (indexPath.row == 0) {
-//    self.prototypeUserStatsCell.user = self.user;
-//    [self.prototypeUserStatsCell layoutSubviews];
-//    CGSize size = [self.prototypeUserStatsCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//  }
-//  else {
-    self.stubCell.tweet = self.tweets[indexPath.row];
-    [self.stubCell layoutSubviews];
-    size = [self.stubCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//  }
+  if (indexPath.row == 0) {
+    self.stubStatsCell.user = self.user;
+    [self.stubStatsCell layoutSubviews];
+    size = [self.stubStatsCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+  }
+  else {
+    self.stubTweetCell.tweet = self.tweets[indexPath.row];
+    [self.stubTweetCell layoutSubviews];
+    size = [self.stubTweetCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+  }
   
   return size.height + 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
-  if (self.tweets.count > 0) {
-    cell.tweet = self.tweets[indexPath.row];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  if (indexPath.row == 0) {
+    UserStatsCell *userStatsCell = [tableView dequeueReusableCellWithIdentifier:@"UserStatsCell" forIndexPath:indexPath];
+    userStatsCell.user = self.user;
+    return userStatsCell;
   }
+  
+  TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
+  cell.tweet = self.tweets[indexPath.row - 1];
+  cell.delegate = self;
   return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:NO];
-  
-  TweetViewController *vc = [[TweetViewController alloc] init];
-  vc.tweet = self.tweets[indexPath.row];
-  [self.navigationController pushViewController:vc animated:YES];
+  if (indexPath.row != 0) {
+    TweetViewController *vc = [[TweetViewController alloc] init];
+    vc.tweet = self.tweets[indexPath.row - 1];
+    [self.navigationController pushViewController:vc animated:YES];
+  }
 }
 
-#pragma mark - TweetCellDelegate
+#pragma mark - TweetCell & ProfileHeaderView Delegate
 
-- (void)didTapProfileImage:(TweetCell *)cell {
+- (void)onTapProfileImage:(User *)user {
   ProfileViewController *vc = [[ProfileViewController alloc] init];
-  vc.user = cell.tweet.user;
+  vc.user = user;
   [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -195,23 +225,5 @@
     }];
   
 }
-
-// Add expanding profile header
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//  CGFloat offset = self.profileTableView.contentOffset.y;
-//  if (offset < 0) {
-//    // enlarge and blur the header image
-//    self.headerView.frame = CGRectMake(0, offset, 320, 150 - offset);
-//    self.bannerImageView.frame = CGRectMake(0, offset, 320, 150 - offset);
-//    CGFloat blurRadius = -offset/8;
-//    CGFloat tintAlpha = MIN(-offset/800, 1);
-//    self.bannerImageView.image = [self.bannerImage applyBlurWithRadius:blurRadius tintColor:[UIColor colorWithWhite:0.97 alpha:tintAlpha] saturationDeltaFactor:1 maskImage:nil];
-//  } else {
-//    // restore the header to normal
-//    self.headerView.frame = CGRectMake(0, 0, 320, 150);
-//    self.bannerImageView.frame = CGRectMake(0, 0, 320, 150);
-//    self.bannerImageView.image = self.bannerImage;
-//  }
-//}
 
 @end

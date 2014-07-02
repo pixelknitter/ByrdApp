@@ -4,14 +4,53 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserBoxView"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="UserBoxView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D40-Qi-4yd">
+                    <rect key="frame" x="62" y="10" width="250" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ScreenName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-C3-WIK">
+                    <rect key="frame" x="62" y="26" width="250" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Uv-IO-NM1">
+                    <rect key="frame" x="6" y="6" width="48" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="5tv-oh-5Rv"/>
+                        <constraint firstAttribute="width" constant="48" id="fac-DD-XKE"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="2Uv-IO-NM1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="0eE-N8-Um1"/>
+                <constraint firstItem="2Uv-IO-NM1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="19C-PV-soH"/>
+                <constraint firstAttribute="trailing" secondItem="D40-Qi-4yd" secondAttribute="trailing" constant="8" id="49W-CQ-VaD"/>
+                <constraint firstItem="D40-Qi-4yd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="XZZ-5s-1Ay"/>
+                <constraint firstAttribute="trailing" secondItem="6Uk-C3-WIK" secondAttribute="trailing" constant="8" id="kX3-vx-RRa"/>
+                <constraint firstItem="D40-Qi-4yd" firstAttribute="leading" secondItem="2Uv-IO-NM1" secondAttribute="trailing" constant="8" id="pwe-zg-a4u"/>
+                <constraint firstItem="D40-Qi-4yd" firstAttribute="leading" secondItem="6Uk-C3-WIK" secondAttribute="leading" id="z45-lA-LDe"/>
+                <constraint firstItem="6Uk-C3-WIK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="26" id="zkb-Hy-SUx"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="nameLabel" destination="D40-Qi-4yd" id="Wgp-kW-Qqo"/>
+                <outlet property="profileImageView" destination="2Uv-IO-NM1" id="cUF-Im-OdX"/>
+                <outlet property="screenNameLabel" destination="6Uk-C3-WIK" id="sEW-zf-m2t"/>
+            </connections>
         </view>
     </objects>
 </document>

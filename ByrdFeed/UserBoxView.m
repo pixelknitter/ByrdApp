@@ -7,16 +7,57 @@
 //
 
 #import "UserBoxView.h"
+#import "Utils.h"
+
+@interface UserBoxView ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *screenNameLabel;
+
+@end
+
 
 @implementation UserBoxView
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+  self = [super initWithFrame:frame];
+  if (self) {
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapProfileImage)];
+    [self.profileImageView addGestureRecognizer:tapGestureRecognizer];
+    
+    // Initialization code
+    UINib *nib = [UINib nibWithNibName:@"UserBoxView" bundle:nil];
+    NSArray *objects = [nib instantiateWithOwner:self options:nil];
+    
+    _profileImageView.layer.cornerRadius = 5;
+    
+    UIView *subview = objects[0];
+    self.frame = subview.frame;
+    [self addSubview:objects[0]];
+  }
+  return self;
+}
+
+- (void)setUser:(User *)user {
+  _user = user;
+  NSLog(@"Setting User");
+  [self reloadData];
+}
+
+- (void)reloadData {
+  _profileImageView = nil;
+  
+  NSLog(@"Loading data");
+#warning TODO convert saved BG color to UIColor
+  [Utils loadImageUrl:_user.profileImageURL inImageView:self.profileImageView withAnimation:YES];
+  _nameLabel.text = _user.name;
+  _screenNameLabel.text = [User getFormattedUserName:_user.screenName];
+}
+
+- (void)onTapProfileImage {
+  [self.delegate onTapProfileImage:self.user];
 }
 
 /*

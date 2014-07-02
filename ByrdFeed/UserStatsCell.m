@@ -41,5 +41,4 @@
   self.numFollowersLabel.text = [@(self.user.followerCount) stringValue];
 }
 
-
 @end

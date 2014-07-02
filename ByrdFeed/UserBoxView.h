@@ -12,12 +12,13 @@
 @protocol UserBoxViewDelegate <NSObject>
 
 @required
-- (void)didTapProfileImage;
+- (void)onTapProfileImage:(User *)user;
 
 @end
 
 @interface UserBoxView : UIView
 
 @property (strong, nonatomic) User *user;
+@property (weak, nonatomic) id<UserBoxViewDelegate>delegate;
 
 @end

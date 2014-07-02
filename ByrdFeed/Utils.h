@@ -12,4 +12,8 @@
 
 + (void)loadImageUrl:(NSURL *)url inImageView:(UIImageView *)imageView withAnimation:(BOOL)enableAnimation;
 
++ (void)loadImageUrl:(NSURL *)url inImageView:(UIImageView *)imageView withAnimation:(BOOL)enableAnimation
+             success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image))success
+             failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error))failure;
+
 @end

@@ -293,24 +293,10 @@
   }
   
   if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
-    if(velocity.x > 0) {
-//      NSLog(@"gesture went right");
-    }
-    else {
-//      NSLog(@"gesture went left");
-    }
-    
     [self showMenu];
   }
   
   if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateChanged) {
-    if(velocity.x > 0) {
-//      NSLog(@"gesture went right");
-    }
-    else {
-//      NSLog(@"gesture went left");
-    }
-    
     // Are you more than halfway? If so, show the panel when done dragging by setting this value to YES (1).
     _showPanel = abs([sender view].center.x - _navigationController.view.frame.size.width/2) > _navigationController.view.frame.size.width/2;
     
@@ -368,15 +354,17 @@
 
 - (void)movePanelToOriginalPosition
 {
+  [self viewWillLayoutSubviews];
   [UIView animateWithDuration:SLIDE_TIMING delay:0 options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^{
-                     _navigationController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+                     _navigationController.view.frame = self.view.frame;
                    }
                    completion:^(BOOL finished) {
                      if (finished) {
                        [self resetMainView];
                      }
                    }];
+  
 }
 
 #pragma mark - Menu Delegate Item Actions

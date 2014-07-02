@@ -154,9 +154,10 @@
 
 #pragma mark - TweetCell Delegate
 
-- (void)didTapProfileImage:(TweetCell *)cell {
+- (void)onTapProfileImage:(User *)user {
   ProfileViewController *vc = [[ProfileViewController alloc] init];
-  vc.user = cell.tweet.user;
+  vc.user = user;
+#warning TODO check if profile is already pushed, perhaps by tagging it.
   [self.navigationController pushViewController:vc animated:YES];
 }
 

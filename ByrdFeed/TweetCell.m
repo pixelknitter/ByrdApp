@@ -76,7 +76,7 @@
 }
 
 - (void)onTapProfileImage {
-  [self.delegate didTapProfileImage:self];
+  [self.delegate onTapProfileImage:self.tweet.user];
 }
 
 @end

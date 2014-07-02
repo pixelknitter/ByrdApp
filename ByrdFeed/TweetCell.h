@@ -20,7 +20,7 @@
 - (IBAction)favoriteButton:(id)sender;
 
 @required
-- (void)didTapProfileImage:(TweetCell *)cell;
+- (void)onTapProfileImage:(User *)user;
 
 @end
 

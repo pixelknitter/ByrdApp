@@ -21,7 +21,7 @@ static __strong User *currentUser = nil;
            @"tweetCount"      : @"statuses_count",
            @"followerCount"   : @"follower_count",
 //           @"followingCount"  : @"following_count",
-           @"pbackImageURL"   : @"profile_background_image_url",
+           @"bannerImageURL"   : @"profile_background_image_url",
            @"profileImageURL" : @"profile_image_url",
            @"location"        : @"location",
            @"description"     : @"description"
@@ -34,7 +34,7 @@ static __strong User *currentUser = nil;
   }];
 }
 
-+ (NSValueTransformer *)pbackImageURLURLJSONTransformer {
++ (NSValueTransformer *)bannerImageURLJSONTransformer {
   return [MTLValueTransformer reversibleTransformerWithBlock:^id(NSString *str) {
     return [NSURL URLWithString:[str stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]];
   }];

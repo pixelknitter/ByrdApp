@@ -49,6 +49,8 @@
   
 //  self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
   
+  self.title = @"Tweet";
+  
   if (_tweet.retweetCount > 0 || _tweet.favoritesCount > 0){
     self.showStatus = true;
   }

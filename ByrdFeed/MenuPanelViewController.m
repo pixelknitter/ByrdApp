@@ -8,10 +8,13 @@
 
 #import "MenuPanelViewController.h"
 #import "MenuCell.h"
+#import "UserBoxView.h"
+#import "TwitterClient.h"
 
 @interface MenuPanelViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
 @property (strong, nonatomic) NSArray *menuItems;
+@property (strong, nonatomic) UserBoxView *userBoxView;
 
 @end
 
@@ -36,17 +39,26 @@
   [super viewDidLoad];
   
   self.menuTableView.scrollEnabled = NO;
-  
+  [self.menuTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
   [self.menuTableView setSeparatorInset:UIEdgeInsetsZero];
   
   UINib *cellNib = [UINib nibWithNibName:@"MenuCell" bundle:nil];
   [self.menuTableView registerNib:cellNib forCellReuseIdentifier:@"MenuCell"];
+  
+  
+  // set up header
+  
+  // init the header views
+  self.userBoxView = [[UserBoxView alloc] init];
+  self.userBoxView.user = [[TwitterClient sharedInstance] getCurrentUser];
   
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  
+  self.menuTableView.tableHeaderView = self.userBoxView;
 }
 
 - (void)didReceiveMemoryWarning
