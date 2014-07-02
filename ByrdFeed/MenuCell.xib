@@ -41,8 +41,8 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
-                <outlet property="MenuIcon" destination="NUz-3g-kWR" id="u2U-wf-uNh"/>
-                <outlet property="MenuItemLabel" destination="H2p-sc-9uM" id="fru-1E-chF"/>
+                <outlet property="menuIcon" destination="NUz-3g-kWR" id="WWJ-DK-WNN"/>
+                <outlet property="menuTitleLabel" destination="EQn-9k-DIu" id="9GC-39-6Ah"/>
             </connections>
         </tableViewCell>
     </objects>

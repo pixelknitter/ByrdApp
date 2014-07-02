@@ -15,14 +15,12 @@
   return @{
            @"tweetID"           : @"id_str",
            @"text"              : @"text",
-           @"userName"          : @"user.name",
-           @"screenName"        : @"user.screen_name",
+           @"user"              : @"user",
            @"createdAt"         : @"created_at",
            @"isRetweeted"       : @"retweeted",
            @"isFavorited"       : @"favorited",
            @"retweetCount"      : @"retweet_count",
            @"favoritesCount"    : @"favorite_count",
-           @"profileImageURL"   : @"user.profile_image_url"
            };
 }
 
@@ -31,6 +29,13 @@
   dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
   dateFormatter.dateFormat = @"EEE MMM d HH:mm:ss ZZZZ yyyy";
   return dateFormatter;
+}
+
++ (NSValueTransformer *)userJSONTransformer
+{
+  return [MTLValueTransformer transformerWithBlock:^(NSDictionary *dict) {
+    return [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:dict error:nil];
+  }];
 }
 
 + (NSValueTransformer *)createdAtJSONTransformer {

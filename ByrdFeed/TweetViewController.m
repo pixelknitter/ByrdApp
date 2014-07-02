@@ -47,6 +47,8 @@
   [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
   
+//  self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
+  
   if (_tweet.retweetCount > 0 || _tweet.favoritesCount > 0){
     self.showStatus = true;
   }
@@ -64,12 +66,12 @@
     self.retweetButton.selected = YES;
   }
   
-  self.usernameLabel.text = _tweet.screenName;
-  self.userLabel.text = _tweet.userName;
+  self.usernameLabel.text = _tweet.user.screenName;
+  self.userLabel.text = _tweet.user.name;
   self.tweetLabel.text = _tweet.text;
   self.retweetsCountLabel.text = [NSString stringWithFormat:@"%d", _tweet.retweetCount];
   self.favoritesCountLabel.text = [NSString stringWithFormat:@"%d", _tweet.favoritesCount];
-  [Utils loadImageUrl:_tweet.profileImageURL inImageView:self.profileImageView withAnimation:YES];
+  [Utils loadImageUrl:_tweet.user.profileImageURL inImageView:self.profileImageView withAnimation:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -164,7 +166,7 @@
 - (void) onComposeButton {
   ComposeTweetViewController *composeView = [[ComposeTweetViewController alloc] init];
 #warning TODO Refactor to not use properties
-  composeView.replyTo = [User getFormattedUserName:_tweet.screenName];
+  composeView.replyTo = [User getFormattedUserName:_tweet.user.screenName];
   composeView.replyIdStr = self.tweet.tweetID;
   
   [UIView  beginAnimations:@"ShowCompose" context: nil];

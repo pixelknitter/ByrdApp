@@ -8,6 +8,7 @@
 
 #import "TwitterClient.h"
 #import "PersistencyManager.h"
+#import "NSURL+DictionaryFromQueryString.h"
 
 // OAUTH SETUP
 #define TWITTER_BASE_URL @"https://api.twitter.com/"
@@ -33,24 +34,6 @@
 
 static NSString *TWITTER_CONSUMER_KEY;
 static NSString *TWITTER_CONSUMER_SECRET;
-
-@implementation NSURL (dictionaryFromQueryString)
--(NSDictionary *) dictionaryFromQueryString{
-  
-  NSString *query = [self query];
-  NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:0];
-  NSArray *pairs = [query componentsSeparatedByString:@"&"];
-  
-  for (NSString *pair in pairs) {
-    NSArray *elements = [pair componentsSeparatedByString:@"="];
-    NSString *key = [[elements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *val = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    [dict setObject:val forKey:key];
-  }
-  return dict;
-}
-@end
 
 @interface TwitterClient()
 
@@ -98,6 +81,9 @@ static NSString *TWITTER_CONSUMER_SECRET;
     
     TWITTER_CONSUMER_KEY = [temp objectForKey:@"TWITTER_CONSUMER_KEY"];
     TWITTER_CONSUMER_SECRET = [temp objectForKey:@"TWITTER_CONSUMER_SECRET"];
+    
+//    TWITTER_CONSUMER_KEY = [temp objectForKey:@"TWITTER_CONSUMER_KEY_DEV"];
+//    TWITTER_CONSUMER_SECRET = [temp objectForKey:@"TWITTER_CONSUMER_SECRET_DEV"];
     
     /* now create the instance */
     _sharedInstance = [[TwitterClient alloc] initWithBaseURL:[NSURL URLWithString:TWITTER_BASE_URL] consumerKey:TWITTER_CONSUMER_KEY consumerSecret:TWITTER_CONSUMER_SECRET];
@@ -173,26 +159,40 @@ static NSString *TWITTER_CONSUMER_SECRET;
 
 #pragma mark - REST APIs
 
-- (AFHTTPRequestOperation *)getWithEndpointType:(TwitterClientEndpointType)endpointType success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+- (AFHTTPRequestOperation *)getWithEndpointType:(TwitterClientEndpointType)endpointType parameters:(NSMutableDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
 
   NSString *endpointTypeString = [[NSString alloc] init];
-  NSDictionary *parameters = nil;
   
-  if (endpointType == TwitterClientEndpointUser){
-    endpointTypeString = GET_USER_URL;
-  }
-  else if (endpointType == TwitterClientEndpointTimeline){
-    endpointTypeString = GET_TIMELINE_URL;
-    
-    // Grab default number of tweets for timeline
-    parameters = @{@"count": @(20)};
-  }
-  else if (endpointType == TwitterClientEndpointMentions){
-    endpointTypeString = GET_MENTIONS_URL;
-  }
-  else if (endpointType == TwitterClientEndpointMyTweets){
-    endpointTypeString = GET_MY_TWEETS_URL;
-    parameters = @{ @"screen_name": [User currentUser].userName };
+  switch (endpointType) {
+    case TwitterClientEndpointUser: {
+      endpointTypeString = GET_USER_URL;
+      break;
+    }
+    case TwitterClientEndpointTimeline: {
+      endpointTypeString = GET_TIMELINE_URL;
+      
+      if(!parameters) {
+        parameters = [[NSMutableDictionary alloc] init];
+      }
+      // Grab default number of tweets for timeline
+      [parameters addEntriesFromDictionary:@{@"count" : @(20)}];
+      break;
+    }
+    case TwitterClientEndpointMentions: {
+      endpointTypeString = GET_MENTIONS_URL;
+      break;
+    }
+    case TwitterClientEndpointMyTweets: {
+      endpointTypeString = GET_MY_TWEETS_URL;
+      
+      if(!parameters) {
+        parameters = [[NSMutableDictionary alloc] init];
+      }
+      [parameters addEntriesFromDictionary:@{ @"screen_name": [User currentUser].screenName }];
+      break;
+    }
+    default:
+      break;
   }
   
   return [self GET:endpointTypeString parameters:parameters success:success failure:failure];
@@ -201,26 +201,35 @@ static NSString *TWITTER_CONSUMER_SECRET;
   
   NSString *endpointTypeString = [[NSString alloc] init];
   
-  if (endpointType == TwitterClientEndpointAddTweet){
-    endpointTypeString = POST_STATUS_UPDATE_URL;
-  }
-  else if (endpointType == TwitterClientEndpointReply){
-    endpointTypeString = POST_STATUS_UPDATE_URL;
-  }
-  else if (endpointType == TwitterClientEndpointRetweet){
-    NSString *tweetId = parameters[@"id"];
-    
-    endpointTypeString = [NSString stringWithFormat:POST_STATUS_RETWEET_URL, tweetId ];
-  }
-  else if (endpointType == TwitterClientEndpointFavorite) {
-    endpointTypeString = POST_STATUS_FAVORITE_URL;
-  }
-  else if (endpointType == TwitterClientEndpointUnfavorite) {
-    endpointTypeString = POST_STATUS_UNFAVORITE_URL;
-  }
-  else if (endpointType == TwitterClientEndpointUnTweet) {
-    NSString *tweetId = parameters[@"id"];
-    endpointTypeString = [NSString stringWithFormat:POST_STATUS_UNTWEET_URL, tweetId ];
+  switch (endpointType) {
+    case TwitterClientEndpointAddTweet: {
+      endpointTypeString = POST_STATUS_UPDATE_URL;
+      break;
+    }
+    case TwitterClientEndpointReply: {
+      endpointTypeString = POST_STATUS_UPDATE_URL;
+      break;
+    }
+    case TwitterClientEndpointRetweet: {
+      NSString *tweetId = parameters[@"id"];
+      endpointTypeString = [NSString stringWithFormat:POST_STATUS_RETWEET_URL, tweetId];
+      break;
+    }
+    case TwitterClientEndpointFavorite: {
+      endpointTypeString = POST_STATUS_FAVORITE_URL;
+      break;
+    }
+    case TwitterClientEndpointUnfavorite: {
+      endpointTypeString = POST_STATUS_UNFAVORITE_URL;
+      break;
+    }
+    case TwitterClientEndpointUnTweet: {
+      NSString *tweetId = parameters[@"id"];
+      endpointTypeString = [NSString stringWithFormat:POST_STATUS_UNTWEET_URL, tweetId];
+      break;
+    }
+    default:
+      break;
   }
   
   return [self POST:endpointTypeString parameters:parameters success:success failure:failure];

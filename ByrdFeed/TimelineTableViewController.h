@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MenuPanelViewController.h"
+#import "TwitterClient.h"
 
-@protocol TimelineTableViewControllerDelegate <NSObject>
+@protocol TimelineViewDelegate <NSObject>
 
 @optional
 - (void)movePanelLeft;
@@ -20,9 +21,10 @@
 
 @end
 
-@interface TimelineTableViewController : UITableViewController <MenuPanelViewControllerDelegate>
+@interface TimelineTableViewController : UITableViewController
 
-@property (nonatomic, assign) id<TimelineTableViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<TimelineViewDelegate> delegate;
+@property (nonatomic) TwitterClientEndpointType type;
 
 @end
 

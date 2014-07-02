@@ -131,7 +131,7 @@
                 <outlet property="profileImage" destination="sRm-3G-vmd" id="pWK-er-0O8"/>
                 <outlet property="retweetButton" destination="xHm-4y-zy8" id="Zrv-sa-0jU"/>
                 <outlet property="sinceLabel" destination="ypJ-Ng-F5E" id="9gs-8C-g9w"/>
-                <outlet property="tweetLabel" destination="1Sb-5X-i2D" id="ELv-rx-yG2"/>
+                <outlet property="tweetLabel" destination="1Sb-5X-i2D" id="CPe-XB-DU4"/>
                 <outlet property="userLabel" destination="PjB-U4-yUK" id="cJA-5c-2r1"/>
             </connections>
         </tableViewCell>

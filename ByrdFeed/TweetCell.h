@@ -10,18 +10,23 @@
 #import "Utils.h"
 #import "Tweet.h"
 
-@interface TweetCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *userLabel;
-@property (weak, nonatomic) IBOutlet UILabel *sinceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *tweetLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
+@class TweetCell;
 
-@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
-@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@protocol TweetCellDelegate <NSObject>
 
+@optional
 - (IBAction)replyButton:(id)sender;
 - (IBAction)retweetButton:(id)sender;
 - (IBAction)favoriteButton:(id)sender;
+
+@required
+- (void)didTapProfileImage:(TweetCell *)cell;
+
+@end
+
+@interface TweetCell : UITableViewCell
+
+@property (nonatomic, weak) id <TweetCellDelegate> delegate;
+@property (strong, nonatomic) Tweet *tweet;
 
 @end

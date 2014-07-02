@@ -14,10 +14,8 @@
 @property (strong, nonatomic) NSString *tweetID;
 @property (strong, nonatomic) NSString *createdAt;
 @property (strong, nonatomic) NSString *text;
-@property (strong, nonatomic) NSString *userName;
-@property (strong, nonatomic) NSString *screenName;
+@property (strong, nonatomic) User *user;
 @property (strong, nonatomic) NSString *location;
-@property (strong, nonatomic) NSURL *profileImageURL;
 @property (nonatomic, assign) NSInteger followerCount;
 @property (nonatomic, assign) NSInteger favoritesCount;
 @property (nonatomic, assign) NSInteger retweetCount;

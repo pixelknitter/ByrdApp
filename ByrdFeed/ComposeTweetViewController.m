@@ -12,7 +12,6 @@
 #import "TSMessage.h"
 #import "TwitterClient.h"
 #import "Constants.h"
-#import "Tweet.h"
 #import "User.h"
 #import "Utils.h"
 
@@ -74,8 +73,8 @@
   // load user data
   [Utils loadImageUrl:user.profileImageURL inImageView:self.profileImageView withAnimation:YES];
   
-  self.userLabel.text = user.realName;
-  self.usernameLabel.text = [User getFormattedUserName:user.userName];
+  self.userLabel.text = user.name;
+  self.usernameLabel.text = [User getFormattedUserName:user.screenName];
   
   [self.tweetTextField becomeFirstResponder];
 }
@@ -104,7 +103,7 @@
                                                          @"in_reply_to_status_id": _replyIdStr ? _replyIdStr : @""
                                                          }
                                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                                 Tweet *newTweet = [[Tweet alloc] initWithDictionary:responseObject];
+                                                 Tweet *newTweet = [[Tweet alloc] initWithDictionary:responseObject error:nil];
                                                  /* notify observers */
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:NewTweetCreatedNotification object:self userInfo:[NSDictionary dictionaryWithObject:newTweet forKey:@"tweet"]];
                                                  [UIView animateWithDuration:0.75 animations:^{

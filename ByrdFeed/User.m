@@ -16,8 +16,8 @@ static __strong User *currentUser = nil;
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
   return @{
            @"userID"          : @"id",
-           @"realName"        : @"name",
-           @"userName"        : @"screen_name",
+           @"name"            : @"name",
+           @"screenName"      : @"screen_name",
            @"tweetCount"      : @"statuses_count",
            @"followerCount"   : @"follower_count",
 //           @"followingCount"  : @"following_count",
@@ -74,9 +74,9 @@ static __strong User *currentUser = nil;
   if (currentUser == nil){
       NSData *archivedObject = [[NSUserDefaults standardUserDefaults] objectForKey:CURRENT_USER_KEY];
       currentUser = (User *)[NSKeyedUnarchiver unarchiveObjectWithData:archivedObject];
-      NSLog(@"User Grabbed: %@", currentUser.userName);
+      NSLog(@"User Grabbed: %@", currentUser.screenName);
 	}
-
+  [[NSUserDefaults standardUserDefaults] synchronize];
 	return currentUser;
 }
 
@@ -85,6 +85,7 @@ static __strong User *currentUser = nil;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:CURRENT_USER_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     currentUser = nil;
+    [[NSUserDefaults standardUserDefaults] synchronize];
   }
   return YES;
 }
@@ -101,39 +102,5 @@ static __strong User *currentUser = nil;
   /* notify others */
   [[NSNotificationCenter defaultCenter] postNotificationName:UserLoggedInNotification object:nil];
 }
-
-#pragma mark - NSCoding methods
-
-//- (id)initWithCoder:(NSCoder *)coder
-//{
-//  if (self = [super init])
-//  {
-//    _userName = [coder decodeObjectForKey: @"userName"];
-//    _description = [coder decodeObjectForKey: @"description"];
-//    _realName = [coder decodeObjectForKey: @"realName"];
-//    _location = [coder decodeObjectForKey: @"location"];
-//    _profileBackgroundColor = [coder decodeObjectForKey: @"profileBackgroundColor"];
-//    _profileBackgroundImageURL = [coder decodeObjectForKey: @"profileBackgroundImageURL"];
-//    _profileImageURL = [coder decodeObjectForKey: @"profileImageURL"];
-//    _userID = [coder decodeIntegerForKey: @"userID"];
-//    _followerCount = [coder decodeIntegerForKey:@"followerCount"];
-//    _tweetCount = [coder decodeIntegerForKey: @"tweetCount"];
-//  }
-//  return self;
-//}
-
-//- (void)encodeWithCoder:(NSCoder *)coder
-//{
-//  [coder encodeObject:_userName forKey:@"userName"];
-//  [coder encodeObject:_description forKey:@"description"];
-//  [coder encodeObject:_realName forKey:@"realName"];
-//  [coder encodeObject:_location forKey:@"location"];
-//  [coder encodeObject:_profileBackgroundColor forKey:@"profileBackgroundColor"];
-//  [coder encodeObject:_profileBackgroundImageURL forKey:@"profileBackgroundImageURL"];
-//  [coder encodeObject:_profileImageURL forKey:@"profileImageURL"];
-//  [coder encodeInteger:_userID forKey:@"userID"];
-//  [coder encodeInteger:_followerCount forKey:@"followerCount"];
-//  [coder encodeInteger:_tweetCount forKey:@"tweetCount"];
-//}
 
 @end

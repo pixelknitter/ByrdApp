@@ -20,4 +20,8 @@
 - (void)addUser:(User*)user atIndex:(int)index;
 - (void)deleteUserAtIndex:(int)index;
 
+- (User *)getCurrentUser;
+- (void)setAsCurrentUser;
++ (BOOL)resetCurrentUser;
+
 @end

@@ -10,9 +10,9 @@
 
 @interface User : MTLModel <MTLJSONSerializing, NSCoding>
 
-@property (strong, nonatomic) NSString *userName;
+@property (strong, nonatomic) NSString *screenName;
 @property (strong, nonatomic) NSString *description;
-@property (strong, nonatomic) NSString *realName;
+@property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) NSString *profileBackgroundColor;
 @property (strong, nonatomic) NSURL *pbackImageURL;

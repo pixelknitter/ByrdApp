@@ -9,7 +9,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MainViewController.h"
 #import "TimelineTableViewController.h"
+#import "ComposeTweetViewController.h"
+#import "TweetViewController.h"
 #import "MenuPanelViewController.h"
+#import "ProfileViewController.h"
+#import "LoginViewController.h"
 #import "Constants.h"
 #import "TwitterClient.h"
 
@@ -18,13 +22,14 @@
 #define MENU_PANEL_TAG 2
 
 #define SLIDE_TIMING .25
-#define PANEL_WIDTH 60
+#define PANEL_WIDTH 50
 
-@interface MainViewController () <TimelineTableViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface MainViewController () <TimelineViewDelegate, MenuPanelDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) TimelineTableViewController *timelineViewController;
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) MenuPanelViewController *menuPanelViewController;
+@property (strong, nonatomic) LoginViewController *loginViewController;
 
 @property (nonatomic, assign) BOOL showingLeftPanel;
 @property (nonatomic, assign) BOOL showingRightPanel;
@@ -46,7 +51,6 @@
   [super viewDidLoad];
   
   /* check if we have a current user, if not login */
-  
   if (![[TwitterClient sharedInstance] isLoggedIn]){
     [[TwitterClient sharedInstance] login];
   }
@@ -96,6 +100,7 @@
   self.timelineViewController = [[TimelineTableViewController alloc] initWithNibName:nil bundle:nil];
   self.timelineViewController.view.tag = CENTER_TAG;
   self.timelineViewController.delegate = self;
+  self.timelineViewController.type = TwitterClientEndpointTimeline;
   
   self.navigationController = [[UINavigationController alloc] initWithRootViewController:_timelineViewController];
   self.navigationController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -106,9 +111,15 @@
   [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
   [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
   [self.navigationController.navigationBar setTranslucent:YES];
-  
   [self.view addSubview:_navigationController.view];
   [self addChildViewController:_navigationController];
+  
+  // Set Menu Button
+  UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu-button"] style:UIBarButtonItemStyleBordered target:self action:@selector(menuButtonPressed:)];
+  
+  menuButton.tintColor = [UIColor whiteColor];
+  
+  self.timelineViewController.navigationItem.leftBarButtonItem = menuButton;
   
   [_navigationController didMoveToParentViewController:self];
   
@@ -145,6 +156,8 @@
     self.showingRightPanel = NO;
   }
   
+  // TODO find a way to deactive the navbar buttons
+  
   [_navigationController.view removeGestureRecognizer:self.tapCloseGesture];
   
   // remove view shadows
@@ -157,10 +170,9 @@
   if (_menuPanelViewController == nil)
   {
     // this is where you define the view for the left panel
-#warning Set Left View
     self.menuPanelViewController = [[MenuPanelViewController alloc] initWithNibName:@"LeftMenuPanelViewController" bundle:nil];
     self.menuPanelViewController.view.tag = MENU_PANEL_TAG;
-    self.menuPanelViewController.delegate = _timelineViewController;
+    self.menuPanelViewController.delegate = self;
     
     [self.view addSubview:self.menuPanelViewController.view];
     
@@ -187,7 +199,7 @@
     // this is where you define the view for the right panel
     self.menuPanelViewController = [[MenuPanelViewController alloc] initWithNibName:@"RightMenuPanelViewController" bundle:nil];
     self.menuPanelViewController.view.tag = MENU_PANEL_TAG;
-    self.menuPanelViewController.delegate = _timelineViewController;
+    self.menuPanelViewController.delegate = self;
     
     [self.view addSubview:self.menuPanelViewController.view];
     
@@ -231,6 +243,30 @@
   }
 }
 
+- (void)menuButtonPressed:(id)sender {
+  _showPanel = !_showPanel;
+  [self showMenu];
+}
+
+- (void)showMenu {
+  if (!_showPanel) {
+    [self movePanelToOriginalPosition];
+  }
+  else {
+    if (_showingLeftPanel) {
+      [self movePanelRight];
+    }
+    else if (_showingRightPanel) {
+      [self movePanelLeft];
+    }
+    else {
+      [self movePanelRight];
+    }
+    [_navigationController.view addGestureRecognizer:self.tapCloseGesture];
+    // TODO find a way to deactive the navbar buttons
+  }
+}
+
 - (void)movePanel:(id)sender
 {
   [[[(UITapGestureRecognizer*)sender view] layer] removeAllAnimations];
@@ -264,18 +300,7 @@
 //      NSLog(@"gesture went left");
     }
     
-    if (!_showPanel) {
-      [self movePanelToOriginalPosition];
-    }
-    else {
-      if (_showingLeftPanel) {
-        [self movePanelRight];
-      }
-      else if (_showingRightPanel) {
-        [self movePanelLeft];
-      }
-      [_navigationController.view addGestureRecognizer:self.tapCloseGesture];
-    }
+    [self showMenu];
   }
   
   if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateChanged) {
@@ -308,6 +333,7 @@
 #pragma mark -
 #pragma mark Delegate Actions
 
+#pragma mark - Menu Panel Delegate
 - (void)movePanelLeft // to show right panel
 {
   UIView *childView = [self getRightView];
@@ -351,6 +377,61 @@
                        [self resetMainView];
                      }
                    }];
+}
+
+#pragma mark - Menu Delegate Item Actions
+- (void)menuItemSelected:(MenuItem)menuItem {
+  // Reset Panel
+  _showPanel = NO;
+  
+  // Select Item Action
+  switch (menuItem) {
+    case Profile: {
+      [self showProfile];
+      break;
+    }
+    case Timeline: {
+      [self showHomeTimeline];
+      break;
+    }
+    case Mentions: {
+      [self showMentionsTimeline];
+      break;
+    }
+    case Logout: {
+      [self signOut];
+      break;
+    }
+    default:
+      break;
+  }
+  
+  [self showMenu];
+}
+
+- (void)showHomeTimeline {
+  self.timelineViewController.type = TwitterClientEndpointTimeline;
+}
+
+- (void)showMentionsTimeline {
+  self.timelineViewController.type = TwitterClientEndpointMentions;
+}
+
+- (void)showProfile {
+  ProfileViewController *vc = [[ProfileViewController alloc] init];
+  vc.user = [[TwitterClient sharedInstance] getCurrentUser];
+  [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)signOut {
+  // Deauthorize and more
+  [[TwitterClient sharedInstance] deauthorize];
+  [User resetCurrentUser];
+  [[NSNotificationCenter defaultCenter] postNotificationName:UserSignOutNotification object:nil userInfo:nil];
+  // Pop View Controller
+  self.loginViewController = [[LoginViewController alloc] init];
+  // TODO add animation with the Twitter Bird icon
+  [self presentViewController:self.loginViewController animated:YES completion:nil];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

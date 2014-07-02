@@ -15,17 +15,15 @@ typedef enum  {
   Logout
 } MenuItem;
 
-@protocol MenuPanelViewControllerDelegate <NSObject>
-
-@optional
+@protocol MenuPanelDelegate <NSObject>
 
 @required
-- (void)selectedMenuItem:(MenuItem *)menuItem;
+- (void)menuItemSelected:(MenuItem)menuItem;
 
 @end
 
 @interface MenuPanelViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, assign) id<MenuPanelViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<MenuPanelDelegate> delegate;
 
 @end

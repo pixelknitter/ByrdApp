@@ -9,6 +9,7 @@
 #import "TimelineTableViewController.h"
 #import "LoginViewController.h"
 #import "TweetViewController.h"
+#import "ProfileViewController.h"
 #import "ComposeTweetViewController.h"
 #import "MBProgressHUD.h"
 #import "TweetCell.h"
@@ -17,7 +18,7 @@
 #import "Utils.h"
 #import "Constants.h"
 
-@interface TimelineTableViewController ()
+@interface TimelineTableViewController () <TweetCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *timelineTableView;
 @property (strong, nonatomic) TweetCell *stubCell;
@@ -47,26 +48,9 @@
   
 }
 
-
-
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-
-  if([[TwitterClient sharedInstance] isLoggedIn]) {
-    [self fetchTweets];
-  }
-  else {
-    [TSMessage showNotificationInViewController:self title:@"" subtitle:@"" type:TSMessageNotificationTypeWarning duration:1.0 canBeDismissedByUser:YES];
-#warning Add TSMessage that lets them reload without a tableview visible
-  }
-
-  // Set Sign Out Button
-  UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(signOutClicked)];
-  
-  signOutButton.tintColor = [UIColor whiteColor];
-  
-  self.navigationItem.leftBarButtonItem = signOutButton;
   
   /* allow refresh on swipe down */
   UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -74,12 +58,16 @@
 //  [self.timelineTableView addSubview:refreshControl];
   self.refreshControl = refreshControl;
   // Set Title
-  self.title = @"Home";
+  
+  
   
   // Add Compose Button
   UIBarButtonItem *composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onComposeButton)];
   composeButton.tintColor = [UIColor whiteColor];
   self.navigationItem.rightBarButtonItem = composeButton;
+  
+  // Set Inset for divider
+  [self.timelineTableView setSeparatorInset:UIEdgeInsetsZero];
   
   // Set delegates and data source
   self.timelineTableView.dataSource = self;
@@ -100,6 +88,32 @@
 
 #pragma mark - Table view data source
 
+- (void)setType:(TwitterClientEndpointType)type {
+  _type = type;
+  
+  // fetch tweets
+  if([[TwitterClient sharedInstance] isLoggedIn]) {
+    [self fetchTweets];
+  }
+  else {
+    [TSMessage showNotificationInViewController:self title:@"" subtitle:@"" type:TSMessageNotificationTypeWarning duration:2.0 canBeDismissedByUser:YES];
+#warning Add TSMessage that lets them reload without a tableview visible
+  }
+  
+  // set title
+  switch (_type) {
+    case TwitterClientEndpointTimeline:
+      self.title = @"Home";
+      break;
+    case TwitterClientEndpointMentions:
+      self.title = @"My Mentions";
+      break;
+    default:
+      self.title = @"Home";
+      break;
+  }
+}
+
 #pragma mark - Table View Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -115,23 +129,8 @@
 
 - (void)configureCell:(TweetCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-  Tweet *tweet = self.tweets[indexPath.row];
-  
-  if (tweet.isFavorited) {
-    [cell.favoriteButton setImage:[UIImage imageNamed:@"favorite_on.png"] forState:UIControlStateSelected];
-    cell.favoriteButton.selected = YES;
-  }
-  
-  if (tweet.isRetweeted) {
-    [cell.retweetButton setImage:[UIImage imageNamed:@"retweet_on.png"] forState:UIControlStateSelected];
-    cell.retweetButton.selected = YES;
-  }
-  
-  cell.nameLabel.text = tweet.userName;
-  cell.userLabel.text = [User getFormattedUserName:tweet.screenName];
-  [Utils loadImageUrl:tweet.profileImageURL inImageView:cell.profileImage withAnimation:YES];
-  cell.tweetLabel.text = tweet.text;
-  cell.sinceLabel.text = tweet.createdAt;
+  cell.tweet = self.tweets[indexPath.row];
+  cell.delegate = self;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -142,9 +141,9 @@
   return size.height + 1;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//  return UITableViewAutomaticDimension;
-//}
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return 112;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -153,25 +152,23 @@
   return cell;
 }
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
+#pragma mark - TweetCell Delegate
+
+- (void)didTapProfileImage:(TweetCell *)cell {
+  ProfileViewController *vc = [[ProfileViewController alloc] init];
+  vc.user = cell.tweet.user;
+  [self.navigationController pushViewController:vc animated:YES];
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  // Return NO if you do not want the item to be re-orderable.
-  return YES;
+#pragma mark - ComposeTweetViewController Delegate
+
+- (void)didPostTweet:(Tweet *)tweet {
+  NSArray *temp = @[tweet];
+  self.tweets = [temp arrayByAddingObjectsFromArray:self.tweets];
+  [self.timelineTableView reloadData];
 }
-*/
-#pragma mark - Notification
 
-
-#pragma mark - Table view delegate
+#pragma mark - TableView Delegate
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -188,10 +185,10 @@
   [self.navigationController pushViewController:tweetViewController animated:YES];
 }
 
-#warning Infinite scroll, requires me to get the last Tweet ID and pass to the client to paginate
 //- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 //  if (indexPath.row == self.tweets.count -1) {
-//    [self refreshTweets:self.tweets[self.tweets.count -1][@"id"]];
+//    Tweet *tweet = self.tweets[indexPath.row];
+//    [self refreshTweets:tweet.tweetID];
 //  }
 //}
 
@@ -202,7 +199,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   }
   
-  [[TwitterClient sharedInstance] getWithEndpointType:TwitterClientEndpointTimeline success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[TwitterClient sharedInstance] getWithEndpointType:self.type parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //    NSLog(@"%@", responseObject);
     
     self.tweets = [Tweet tweetsWithArray:responseObject];
@@ -213,10 +210,6 @@
                                          subtitle:@"Try sending a tweet!"
                                              type:TSMessageNotificationTypeWarning
                                          duration:1.f];
-    }
-    
-    if (self.tweets.count == 0){
-      self.timelineTableView.hidden = true;
     }
     
     // Go back to Top of TableView
@@ -233,10 +226,15 @@
                                           title:@"Network Error!"
                                        subtitle:@"Please try again in a few..."
                                            type:TSMessageNotificationTypeError
-                                       duration:1.f];
+                                       duration:1.0f];
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
   }];
+  
+//  if (self.tweets.count == 0){
+//    self.timelineTableView.hidden = true;
+//    // Add retry button
+//  }
 }
 
 #pragma mark - Button Selectors
@@ -261,16 +259,15 @@
   NSDictionary *params = nil;
   
   if (tweet != nil) {
-    [Crittercism leaveBreadcrumb:[NSString stringWithFormat:@"Compose w/ Reply to: %@@", tweet.screenName]];
+    [Crittercism leaveBreadcrumb:[NSString stringWithFormat:@"Compose w/ Reply to: %@@", tweet.user.screenName]];
     params = [NSDictionary dictionaryWithObject:@{
                                                   @"replyIdStr": tweet.tweetID,
-                                                  @"replyTo": tweet.screenName
+                                                  @"replyTo": tweet.user.screenName
                                                   } forKey:@"compose"];
   }
   
   [[NSNotificationCenter defaultCenter] postNotificationName:ComposeClicked object:nil userInfo:params];
   
-//  [self presentViewController:composeViewController animated:YES completion:nil]
   [self.navigationController pushViewController:composeViewController animated:YES];
 }
 

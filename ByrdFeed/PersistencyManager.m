@@ -7,6 +7,8 @@
 //
 
 #import "PersistencyManager.h"
+#import "Constants.h"
+#import "Utils.h"
 
 @interface PersistencyManager()
 
@@ -27,22 +29,52 @@
                @[[[Tweet alloc] init] // TODO add actual init
                  ]
                ];
+    _users = [NSMutableArray arrayWithArray:
+              @[[[User alloc] init] // TODO add actual init
+                ]
+              ];
+#warning TODO implement init of Persistency Manager
   }
   return self;
 }
 
 - (NSArray*)getTweets {
-  NSArray *tweets;
-  
-  return tweets;
+  return self.tweets;
 }
 
 - (void)addTweet:(Tweet*)tweet atIndex:(int)index {
-  
+  [self.tweets insertObject:tweet atIndex:index];
 }
 
 - (void)deleteTweetAtIndex:(int)index {
-  
+  [self.tweets removeObjectAtIndex:index];
 }
+
+- (NSArray*)getUsers {
+  return self.users;
+}
+
+- (void)addUser:(User*)user atIndex:(int)index {
+  [self.users insertObject:user atIndex:index];
+}
+
+- (void)deleteUserAtIndex:(int)index {
+  [self.users removeObjectAtIndex:index];
+}
+
+- (User *)getCurrentUser {
+  return [User currentUser];
+}
+
+- (void)setAsCurrentUser {
+	self.currentUser = [User currentUser];
+	/* save to user defaults */
+  NSData *archivedObject = [NSKeyedArchiver archivedDataWithRootObject:self.currentUser];
+  [[NSUserDefaults standardUserDefaults] setObject:archivedObject forKey:CURRENT_USER_KEY];
+  /* notify others */
+  [[NSNotificationCenter defaultCenter] postNotificationName:UserLoggedInNotification object:nil];
+}
+
+
 
 @end

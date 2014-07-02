@@ -62,10 +62,10 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   return [[TwitterClient sharedInstance] processAuthResponseURL:url onSuccess:^{
     /* get user */
-    [[TwitterClient sharedInstance] getWithEndpointType:TwitterClientEndpointUser success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[TwitterClient sharedInstance] getWithEndpointType:TwitterClientEndpointUser parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
       [[User initWithDictionary:responseObject] setAsCurrentUser];
-      
+      [self.viewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
     } failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
       NSLog(@"Failure: %@", error);
     }];

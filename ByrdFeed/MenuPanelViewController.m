@@ -11,6 +11,7 @@
 
 @interface MenuPanelViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
+@property (strong, nonatomic) NSArray *menuItems;
 
 @end
 
@@ -21,6 +22,10 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     // Custom initialization
+    _menuItems = @[@"Profile",
+                   @"Timeline",
+                   @"Mentions",
+                   @"Logout"];
     
   }
   return self;
@@ -28,7 +33,11 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+  [super viewDidLoad];
+  
+  self.menuTableView.scrollEnabled = NO;
+  
+  [self.menuTableView setSeparatorInset:UIEdgeInsetsZero];
   
   UINib *cellNib = [UINib nibWithNibName:@"MenuCell" bundle:nil];
   [self.menuTableView registerNib:cellNib forCellReuseIdentifier:@"MenuCell"];
@@ -54,9 +63,28 @@
   return 1;
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//  return nil;
-//}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  UIView *headerView = [[UIView alloc] init];
+  headerView.backgroundColor = [UIColor whiteColor];
+  
+//  [UIView animateWithDuration:1.0f
+//                        delay:0.9f
+//       usingSpringWithDamping:0.9f
+//        initialSpringVelocity:10.0f
+//                      options:UIViewAnimationOptionBeginFromCurrentState |
+//                              UIViewAnimationCurveEaseInOut
+//                   animations:^{
+//    headerView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, 50.0f);
+//  } completion:nil];
+  
+  headerView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, 50.0f);
+  
+  return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  return 75.0f;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -70,34 +98,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell" forIndexPath:indexPath];
+  MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell" forIndexPath:indexPath];
   
-  // Configure the cell...
+  cell.menuTitleLabel.text = [self.menuItems objectAtIndex:indexPath.row];
+
+#warning TODO find a way to remove  the white borders for the unused cells
   
   return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
 /*
 // Override to support rearranging the table view.
@@ -115,21 +124,14 @@
 }
 */
 
-/*
+
 #pragma mark - Table view delegate
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
-    
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+  [self.delegate menuItemSelected:indexPath.row];
 }
-*/
+
 
 @end
