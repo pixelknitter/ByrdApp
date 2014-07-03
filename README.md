@@ -11,7 +11,7 @@ A twitter client providing you a way to manage, tweet, and feeeed.
 
 ## Basic Twitter
 
-### Required:
+### Required
 * [x] User can sign in using OAuth login flow
 * [x] User can view last 20 tweets from their home timeline
 * [x] The current signed in user will be persisted across restarts
@@ -20,7 +20,7 @@ A twitter client providing you a way to manage, tweet, and feeeed.
 * [x] User can compose a new tweet by tapping on a compose button.
 * [x] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 
-### Optional:
+### Optional
 * [x] When composing, you should have a countdown in the upper right for the tweet limit.
 * [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 * [x] Retweeting and favoriting should increment the retweet and favorite count.
@@ -36,9 +36,11 @@ A twitter client providing you a way to manage, tweet, and feeeed.
 * [x] Dragging anywhere in the view should reveal the menu.
 * [x] The menu should include links to your profile, the home timeline, and the mentions view.
 * [x] The menu can look similar to the LinkedIn menu below or feel free to take liberty with the UI.
+
 #### Profile page
 * [x] Contains the user header view
 * [x] Contains a section with the users basic stats: # tweets, # following, # followers
+
 #### Home Timeline
 * [x] Tapping on a user image should bring up that user's profile page
 
