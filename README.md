@@ -122,4 +122,4 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Personal Notes
 
-* Found an issue with my user persistence that I wasn't able to debug in time for turn in. When I use the sign out button, it causes the bug to present itself.
+* The layout of the primary content window doesn't set properly after the menu is displayed in landscape mode.
